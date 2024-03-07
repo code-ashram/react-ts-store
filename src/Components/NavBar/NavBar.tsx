@@ -1,11 +1,19 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from '@nextui-org/react'
+import { FC } from 'react'
+
 import AcmeLogo from './assets/images/AcmeLogo.tsx'
+import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
 
 import styles from '../../App.module.scss'
-const NavBar = () => {
+
+type Props = {
+  onSwitch: () => void
+}
+
+const NavBar: FC<Props> = ({onSwitch}) => {
 
   return (
-    <Navbar>
+    <Navbar isBordered maxWidth="2xl">
       <NavbarBrand>
         <AcmeLogo />
         <p className="font-bold text-inherit">Code Asharam</p>
@@ -32,6 +40,8 @@ const NavBar = () => {
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem className={styles.navBar__userPanel}>
+          <ThemeSwitcher onSwitch={onSwitch}/>
+
           <Button as={Link} color="primary" variant="solid">
             Sign In
           </Button>

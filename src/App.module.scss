@@ -1,10 +1,9 @@
-/*#root {*/
-/*  max-width: 1280px;*/
-/*  margin: 0 auto;*/
-/*  padding: 2rem;*/
-/*  text-align: center;*/
-/*}*/
-
 :local(.navBar__userPanel) a:not(:first-child) {
   margin-left: 10px;
+}
+
+:local(.container) {
+  padding: 0 24px 0 24px;
+  width: 100%;
+  max-width: 1536px;
 }

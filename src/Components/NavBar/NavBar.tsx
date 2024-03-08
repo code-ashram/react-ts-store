@@ -8,9 +8,10 @@ import styles from '../../App.module.scss'
 
 type Props = {
   onSwitch: () => void
+  isActive: boolean
 }
 
-const NavBar: FC<Props> = ({onSwitch}) => {
+const NavBar: FC<Props> = ({onSwitch, isActive}) => {
 
   return (
     <Navbar isBordered maxWidth="2xl">
@@ -40,7 +41,7 @@ const NavBar: FC<Props> = ({onSwitch}) => {
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem className={styles.navBar__userPanel}>
-          <ThemeSwitcher onSwitch={onSwitch}/>
+          <ThemeSwitcher onSwitch={onSwitch} isActive={isActive}/>
 
           <Button as={Link} color="primary" variant="solid">
             Sign In

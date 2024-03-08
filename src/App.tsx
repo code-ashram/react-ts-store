@@ -1,9 +1,10 @@
+import { useState } from 'react'
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
+
 import NavBar from './Components/NavBar/NavBar.tsx'
+import Container from './Components/UI/Container.tsx'
 
 import './App.module.scss'
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
-import Container from './Components/UI/Container.tsx'
-import { useState } from 'react'
 
 enum Theme {
   Light = 'light',
@@ -11,14 +12,23 @@ enum Theme {
 }
 
 const App = () => {
-  const [theme, setTheme] = useState<Theme>(Theme.Light)
+  const [theme, setTheme] = useState<Theme>(localStorage.getItem('theme') as Theme | null ?? Theme.Light)
+
   const handleSwitchColorTheme = () => {
-    setTheme((prevTheme) => prevTheme === Theme.Light ? Theme.Dark : Theme.Light)
+    setTheme((prevTheme) => {
+        const nextTheme: Theme = prevTheme === Theme.Light
+          ? Theme.Dark
+          : Theme.Light
+
+        localStorage.setItem('theme', nextTheme)
+        return nextTheme
+      }
+    )
   }
 
   return (
     <main className={`${theme} text-foreground bg-background`}>
-      <NavBar onSwitch={handleSwitchColorTheme}/>
+      <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark}/>
       <Container>
         <Table aria-label="Example static collection table">
           <TableHeader>

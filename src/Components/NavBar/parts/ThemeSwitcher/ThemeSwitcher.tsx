@@ -6,26 +6,43 @@ import { FC } from 'react'
 
 type Props = {
   onSwitch: () => void
+  isActive: boolean
 }
 
-const ThemeSwitcher: FC<Props> = ({onSwitch}) => {
+const ThemeSwitcher: FC<Props> = ({onSwitch, isActive}) => {
 
   return (
+  //   <Switch
+  //     onChange={onSwitch}
+  //     defaultSelected
+  //     size="lg"
+  //     color="secondary"
+  //     thumbIcon={({ isSelected, className }) =>
+  //       isSelected ? (
+  //         <SunIcon className={className} />
+  //       ) : (
+  //         <MoonIcon className={className} />
+  //       )
+  //     }
+  //   >
+  //   </Switch>
+  // )
+
     <Switch
       onChange={onSwitch}
-      defaultSelected
+      defaultSelected={isActive}
       size="lg"
       color="secondary"
       thumbIcon={({ isSelected, className }) =>
         isSelected ? (
-          <SunIcon className={className} />
-        ) : (
           <MoonIcon className={className} />
+        ) : (
+          <SunIcon className={className} />
         )
       }
     >
     </Switch>
-  );
+  )
 }
 
 export default ThemeSwitcher

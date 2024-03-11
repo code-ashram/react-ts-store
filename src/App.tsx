@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import { IntlProvider } from 'react-intl'
 
@@ -15,13 +15,14 @@ enum Theme {
   Dark = 'dark'
 }
 
-const languages = {
-  en: en,
-  ru: ru
+const translations = {
+  en,
+  ru
 }
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(localStorage.getItem('theme') as Theme | null ?? Theme.Light)
+  const [lang, setLang] = useState<string>(navigator.language)
 
   const handleSwitchColorTheme = () => {
     setTheme((prevTheme) => {
@@ -35,13 +36,13 @@ const App = () => {
     )
   }
 
-  // const handleSwitchLanguage = () => {
-  //
-  // }
+  useEffect(() => {
+    setLang((prevLanguage) => prevLanguage !== 'ru' ? 'en' : 'ru')
+  }, [lang])
 
   return (
     <>
-      <IntlProvider locale={'ru'} messages={languages.ru}>
+      <IntlProvider locale={lang} messages={translations[lang]}>
         <main className={`${theme} text-foreground bg-background`}>
           <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
           <Container>

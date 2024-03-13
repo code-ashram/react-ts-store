@@ -5,29 +5,13 @@ import { IntlProvider } from 'react-intl'
 import Container from './Components/UI/Container.tsx'
 import NavBar from './Components/NavBar'
 
-import ru from './translations/ru.json'
-import en from './translations/en.json'
+import { browserLang, defineTheme, Theme, translations } from './utils.ts'
 
 import './App.module.scss'
 
-enum Theme {
-  Light = 'light',
-  Dark = 'dark'
-}
-
-enum Language {
-  en = 'en',
-  ru = 'ru',
-}
-
-const translations: Record<Language, Record<string, string>> = {
-  en,
-  ru,
-}
-
 const App = () => {
-  const [theme, setTheme] = useState<Theme>(localStorage.getItem('theme') as Theme | null ?? Theme.Light)
-  const lang = useMemo(() => navigator.language !== 'ru' ? 'en' : 'ru', [])
+  const [theme, setTheme] = useState<Theme>(defineTheme)
+  const lang = useMemo(() => browserLang, [])
 
   const handleSwitchColorTheme = () => {
     setTheme((prevTheme) => {

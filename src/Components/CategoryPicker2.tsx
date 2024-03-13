@@ -21,6 +21,7 @@ const CategoryPicker2: FC<Props> = ({ value, onChange }) => {
     } else {
       const [category] = Array.from((keys) as Set<Category>)
       onChange(category)
+      console.log(Array.from(keys))
     }
 
     return keys

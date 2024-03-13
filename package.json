@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
+    "@tanstack/react-query": "^5.28.0",
+    "axios": "^1.6.7",
     "framer-motion": "^11.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-intl": "^6.6.2"
+    "react-intl": "^6.6.2",
+    "react-query-kit": "^3.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

@@ -8,7 +8,7 @@ type Props = {
 }
 
 const ProductsList: FC<Props> = ({category}) => {
-  const { data } = useQuery({ queryKey: [`'products' category`], queryFn: () => getCategory(category) })
+  const { data } = useQuery({ queryKey: ['products', category], queryFn: () => getCategory(category) })
 
   {console.log(category, data)}
   return (

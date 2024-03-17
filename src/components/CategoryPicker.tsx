@@ -1,30 +1,54 @@
-import { Select, SelectItem } from '@nextui-org/react'
-import { FC, useMemo } from 'react'
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@nextui-org/react'
+import { FC, Key, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-
 import { getCategories } from '../api'
 import { Category } from '../models'
+import { createOptions } from '../utils.ts'
 
-const CategoryPicker: FC = () => {
+type Props = {
+  value: Category
+  onChange: (value: Category) => void
+}
+
+type Option = {
+  key: string,
+  title: string
+}
+
+const CategoryPicker: FC<Props> = ({ value, onChange }) => {
   const { data } = useQuery({ queryKey: ['categories'], queryFn: getCategories })
-  const categories = useMemo(() =>
-    Array.isArray(data) ? [Category.All, ...data] : [Category.All], [data])
+  const categories: Option[] = useMemo(() => createOptions(data), [data])
+
+  const handleChange = (key: Key): void => onChange((key as Category) === value ? Category.All : (key as Category))
 
   return (
-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-      <Select
-        label="Product category"
-        placeholder="Select product category"
-        className="max-w-xs"
+    <Dropdown>
+      <DropdownTrigger>
+        <Button
+          variant="bordered"
+          className="capitalize"
+        >
+          {value}
+        </Button>
+      </DropdownTrigger>
+
+      <DropdownMenu
+        aria-label="Single selection example"
+        variant="flat"
+        selectionMode="single"
+        items={categories}
         defaultSelectedKeys={[Category.All]}
+        selectedKeys={[value]}
+        onAction={handleChange}
+        disallowEmptySelection
       >
-        {categories.map((category) => (
-            <SelectItem key={category} value={category}>
-              {category}
-            </SelectItem>
-          ))}
-      </Select>
-    </div>
+        {(item) => (
+          <DropdownItem key={item.key}>
+            {item.title}
+          </DropdownItem>
+        )}
+      </DropdownMenu>
+    </Dropdown>
   )
 }
 

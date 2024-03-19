@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { IntlProvider } from 'react-intl'
+import cn from 'classnames'
 
 import Container from './components/UI/Container.tsx'
 import NavBar from './components/NavBar'
 import CategoryPicker from './components/CategoryPicker.tsx'
+import ProductsList from './components/ProductsList.tsx'
 
 import { Category } from './models'
 import { browserLang, defineTheme, Theme, translations } from './utils.ts'
 
-import './App.module.scss'
-import ProductsList from './components/ProductsList.tsx'
+import style from './App.module.scss'
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
@@ -37,13 +38,17 @@ const App = () => {
   return (
     <>
       <IntlProvider locale={lang} messages={translations[lang]}>
-        <main className={`${theme} text-foreground bg-background`}>
+        <main className={cn(theme, 'text-foreground', 'bg-background')}>
           <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
 
           <Container>
-            <CategoryPicker onChange={handleChangeCategory} value={category} />
+            <ul className={style.storeFilter}>
+              <CategoryPicker onChange={handleChangeCategory} value={category} />
+            </ul>
 
-            <ProductsList category={category}/>
+            <section className={style.storeSection}>
+              <ProductsList category={category} />
+            </section>
           </Container>
         </main>
       </IntlProvider>

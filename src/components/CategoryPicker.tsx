@@ -1,9 +1,13 @@
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@nextui-org/react'
 import { FC, Key, useMemo } from 'react'
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@nextui-org/react'
+import cn from 'classnames'
 import { useQuery } from '@tanstack/react-query'
+
 import { getCategories } from '../api'
 import { Category } from '../models'
 import { createOptions } from '../utils.ts'
+
+import style from '../App.module.scss'
 
 type Props = {
   value: Category
@@ -26,7 +30,7 @@ const CategoryPicker: FC<Props> = ({ value, onChange }) => {
       <DropdownTrigger>
         <Button
           variant="bordered"
-          className="capitalize"
+          className={cn(style.storeDropdown, 'capitalize')}
         >
           {value}
         </Button>

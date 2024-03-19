@@ -3,7 +3,45 @@
 }
 
 :local(.container) {
+  display: flex;
   padding: 0 24px 0 24px;
   width: 100%;
   max-width: 1536px;
 }
+
+:local(.storeFilter) {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  width: 200px;
+  min-height: 100vh;
+  //min-height: calc(100vh - 64px);
+  border-right: 1px solid #262626;
+}
+
+:local(.storeDropdown) {
+  margin-top: 20px
+}
+
+:local(.storeSection) {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+:local(.productList) {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 500px;
+  grid-auto-rows: 500px;
+}
+
+:local(.card) {
+  height: 100%;
+}
+
+:local(.cardImg) {
+  height: 260px;
+}
+

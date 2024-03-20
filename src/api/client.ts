@@ -15,3 +15,7 @@ export const getCategories = async (): Promise<Category[]> =>
 export const getCategory = async (category: Category): Promise<Product[]> =>
   client.get<Product[]>(`/products${category === Category.All ? '' : `/category/${category}`}`)
     .then((response) => response.data)
+
+export const getProduct = async (id: number): Promise<Product> =>
+  client.get<Product>(`/products/${id}`)
+    .then((response) => response.data)

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 import cn from 'classnames'
 
@@ -11,6 +11,8 @@ import { Category } from './models'
 import { browserLang, defineTheme, Theme, translations } from './utils.ts'
 
 import style from './App.module.scss'
+import { Divider } from '@nextui-org/react'
+import Product from './components/Product.tsx'
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
@@ -33,8 +35,6 @@ const App = () => {
     setCategory(value)
   }
 
-  useEffect(() => {}, [category])
-
   return (
     <>
       <IntlProvider locale={lang} messages={translations[lang]}>
@@ -44,10 +44,12 @@ const App = () => {
           <Container>
             <ul className={style.storeFilter}>
               <CategoryPicker onChange={handleChangeCategory} value={category} />
+              <Divider orientation="vertical"/>
             </ul>
 
             <section className={style.storeSection}>
-              <ProductsList category={category} />
+              {/* <ProductsList category={category} /> */}
+              <Product/>
             </section>
           </Container>
         </main>

@@ -3,5 +3,14 @@
     "navBar.link.delivery": "Delivery And Payment",
     "navBar.link.contacts": "About Us",
     "navBar.link.signIn": "Sign In",
-    "navBar.link.signOut": "Sign Out"
+    "navBar.link.signOut": "Sign Out",
+    "breadcrumbs.home": "Home",
+    "product.rating": "Rating",
+    "product.button.add": "Add to cart",
+    "product.reviews": "Reviews",
+    "category.all": "All",
+    "category.men's clothing": "Men's clothing",
+    "category.women's clothing": "Women's clothing",
+    "category.jewelery": "Jewelery",
+    "category.electronics": "Electronics"
 }

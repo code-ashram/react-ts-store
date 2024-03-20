@@ -8,6 +8,7 @@ import { Category } from '../models'
 import { createOptions } from '../utils.ts'
 
 import style from '../App.module.scss'
+import { FormattedMessage } from 'react-intl/lib'
 
 type Props = {
   value: Category
@@ -19,7 +20,7 @@ type Option = {
   title: string
 }
 
-const CategoryPicker: FC<Props> = ({ value, onChange }) => {
+const CategoryPicker: FC<Props> = ({ value = Category.All, onChange }) => {
   const { data } = useQuery({ queryKey: ['categories'], queryFn: getCategories })
   const categories: Option[] = useMemo(() => createOptions(data), [data])
 
@@ -32,7 +33,7 @@ const CategoryPicker: FC<Props> = ({ value, onChange }) => {
           variant="bordered"
           className={cn(style.storeDropdown, 'capitalize')}
         >
-          {value}
+          <FormattedMessage id={`category.${value}`} defaultMessage="category.all"/>
         </Button>
       </DropdownTrigger>
 
@@ -48,7 +49,7 @@ const CategoryPicker: FC<Props> = ({ value, onChange }) => {
       >
         {(item) => (
           <DropdownItem key={item.key}>
-            {item.title}
+            <FormattedMessage id={`category.${item.title}`} />
           </DropdownItem>
         )}
       </DropdownMenu>

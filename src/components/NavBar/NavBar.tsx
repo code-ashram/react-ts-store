@@ -28,7 +28,7 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
         </NavbarItem>
         <NavbarItem isActive>
           <Link href="#" aria-current="page">
-            <FormattedMessage id={"navBar.link.delivery"}/>
+            <FormattedMessage id={'navBar.link.delivery'} />
           </Link>
         </NavbarItem>
         <NavbarItem>

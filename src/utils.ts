@@ -34,8 +34,3 @@ export const createOption = (value: Category): Option => ({key: value, title: va
 export const createOptions = (data: Category[] | undefined): Option[] => (Array.isArray(data)
   ? [{key: Category.All, title: Category.All}, ...data.map((category) => ({key: category, title: category}))]
   : [{key: Category.All, title: Category.All}])
-
-export const transformToUppercase = (str: Category | undefined) => {
-  if (!str) return str;
-  return str[0].toUpperCase() + str.slice(1);
-}

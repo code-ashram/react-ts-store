@@ -5,6 +5,7 @@ import cn from 'classnames'
 import { Product } from '../models'
 
 import style from '../App.module.scss'
+import { FormattedMessage } from 'react-intl/lib'
 
 type Props = {
   product: Product
@@ -30,7 +31,7 @@ const ProductCard: FC<Props> = ({ product }) => {
       <Divider />
       <CardFooter className="pb-0">
         <Button color="primary">
-          Add To Cart
+          <FormattedMessage id={'product.button.add'} />
         </Button>
       </CardFooter>
     </Card>

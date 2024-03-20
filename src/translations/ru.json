@@ -3,5 +3,14 @@
     "navBar.link.delivery": "Доставка И Оплата",
     "navBar.link.contacts": "Контакты",
     "navBar.link.signIn": "Войти",
-    "navBar.link.signOut": "Регистрация"
+    "navBar.link.signOut": "Регистрация",
+    "breadcrumbs.home": "Главная",
+    "product.rating": "Рейтинг",
+    "product.button.add": "Добавить в корзину",
+    "product.reviews": "Отзывов",
+    "category.all": "Все товары",
+    "category.men's clothing": "Мужская одежда",
+    "category.women's clothing": "Женская одежда",
+    "category.jewelery": "Ювелирия",
+    "category.electronics": "Электроника"
 }

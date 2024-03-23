@@ -31,7 +31,7 @@ const ProductCard: FC<Props> = ({ product }) => {
       <Divider />
       <CardFooter className="pb-0">
         <Button color="primary">
-          <FormattedMessage id={'product.button.add'} />
+          {/* <FormattedMessage id={'product.button.add'} /> */}
         </Button>
       </CardFooter>
     </Card>

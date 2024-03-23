@@ -13,32 +13,33 @@ const Product: FC = () => {
 
   return (
     <>
-      <Breadcrumbs className={cn(style.breadcrump)} size="lg">
-        <BreadcrumbItem>
-          <FormattedMessage id={'breadcrumbs.home'}/>
-        </BreadcrumbItem>
+      {/* <Breadcrumbs className={cn(style.breadcrump)} size="lg"> */}
+      {/*   <BreadcrumbItem> */}
+      {/*     <FormattedMessage id={'breadcrumbs.home'}/> */}
+      {/*   </BreadcrumbItem> */}
 
-        {data &&
-          <>
-            <BreadcrumbItem >
-              <FormattedMessage id={`category.${data.category}`} />
-            </BreadcrumbItem>
+      {/*   {data && */}
+      {/*     <> */}
+      {/*       <BreadcrumbItem > */}
+      {/*         <FormattedMessage id={`category.${data.category}`} /> */}
+      {/*       </BreadcrumbItem> */}
 
-            <BreadcrumbItem>
-              {data.title}
-            </BreadcrumbItem>
-          </>
-        }
+      {/*       <BreadcrumbItem> */}
+      {/*         {data.title} */}
+      {/*       </BreadcrumbItem> */}
+      {/*     </> */}
+      {/*   } */}
 
-      </Breadcrumbs>
+      {/* </Breadcrumbs> */}
 
       <div className={cn(style.productInfo)}>
         <h2 className={cn(style.productTitle)}>{data?.title}</h2>
         <p>
-          <FormattedMessage id={'product.rating'} /> {data?.rating.rate} / 5
+          {/* <FormattedMessage id={'product.rating'} /> {data?.rating.rate} / 5 */}
         </p>
         <Link href="#" size="md">
-          {data?.rating.count} <FormattedMessage id={'product.reviews'} /></Link>
+          {/* {data?.rating.count} <FormattedMessage id={'product.reviews'} />*/}
+        </Link>
       </div>
 
       <div className={cn(style.productWrapper)}>
@@ -48,7 +49,7 @@ const Product: FC = () => {
           <p className={cn(style.productPrice)}>${data?.price}</p>
 
           <Button color="primary">
-            <FormattedMessage id={'product.button.add'} />
+            {/* <FormattedMessage id={'product.button.add'} /> */}gg
           </Button>
 
           <Divider />

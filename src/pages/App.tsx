@@ -1,22 +1,19 @@
 import { useMemo, useState } from 'react'
 import { IntlProvider } from 'react-intl'
+import { Divider } from '@nextui-org/react'
 import cn from 'classnames'
 
-import Container from './components/UI/Container.tsx'
-import NavBar from './components/NavBar'
-import CategoryPicker from './components/CategoryPicker.tsx'
-import ProductsList from './components/ProductsList.tsx'
+import Container from '../components/UI/Container.tsx'
+import NavBar from '../components/NavBar'
+import { Outlet } from 'react-router-dom'
 
-import { Category } from './models'
-import { browserLang, defineTheme, Theme, translations } from './utils.ts'
+import { browserLang, defineTheme, Theme, translations } from '../utils.ts'
 
-import style from './App.module.scss'
-import { Divider } from '@nextui-org/react'
-import Product from './components/Product.tsx'
+import style from '../App.module.scss'
+import CategoryList from '../components/UI/CategoryList.tsx'
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
-  const [category, setCategory] = useState<Category>(Category.All)
   const lang = useMemo(() => browserLang, [])
 
   const handleSwitchColorTheme = () => {
@@ -31,29 +28,24 @@ const App = () => {
     )
   }
 
-  const handleChangeCategory = (value: Category) => {
-    setCategory(value)
-  }
-
   return (
     <>
-      <IntlProvider locale={lang} messages={translations[lang]}>
+
         <main className={cn(theme, 'text-foreground', 'bg-background')}>
           <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
 
           <Container>
             <ul className={style.storeFilter}>
-              <CategoryPicker onChange={handleChangeCategory} value={category} />
-              <Divider orientation="vertical"/>
+              <CategoryList />
+              <Divider orientation="vertical" />
             </ul>
 
             <section className={style.storeSection}>
-              {/* <ProductsList category={category} /> */}
-              <Product/>
+              <Outlet />
             </section>
           </Container>
         </main>
-      </IntlProvider>
+
     </>
   )
 }

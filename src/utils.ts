@@ -29,8 +29,6 @@ type Option = {
   title: string
 }
 
-export const createOption = (value: Category): Option => ({key: value, title: value})
-
 export const createOptions = (data: Category[] | undefined): Option[] => (Array.isArray(data)
   ? [{key: Category.All, title: Category.All}, ...data.map((category) => ({key: category, title: category}))]
   : [{key: Category.All, title: Category.All}])

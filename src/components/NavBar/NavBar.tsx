@@ -23,17 +23,17 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
       <NavbarContent className="sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
-            <FormattedMessage id={"navBar.link.about"}/>
+            {/* <FormattedMessage id={"navBar.link.about"}/> */}
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
           <Link href="#" aria-current="page">
-            <FormattedMessage id={'navBar.link.delivery'} />
+            {/* <FormattedMessage id={'navBar.link.delivery'} /> */}
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            <FormattedMessage id={"navBar.link.contacts"}/>
+            {/* <FormattedMessage id={"navBar.link.contacts"}/> */}
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -47,10 +47,10 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
           <Button as={Link} color="primary" variant="solid">
-            <FormattedMessage id={"navBar.link.signOut"}/>
+            {/* <FormattedMessage id={"navBar.link.signOut"}/> */}
           </Button>
           <Button as={Link} color="primary" href="#" variant="flat">
-            <FormattedMessage id={"navBar.link.signIn"}/>
+            {/* <FormattedMessage id={"navBar.link.signIn"}/> */}
           </Button>
         </NavbarItem>
       </NavbarContent>

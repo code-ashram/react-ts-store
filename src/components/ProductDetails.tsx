@@ -10,6 +10,7 @@ import style from '../App.module.scss'
 
 const ProductDetails: FC = () => {
   const { product } = useLoaderData() as Record<'product', Product>
+  console.log(product)
 
   return (
     <>
@@ -18,8 +19,7 @@ const ProductDetails: FC = () => {
           <FormattedMessage id={'breadcrumbs.home'} />
         </BreadcrumbItem>
 
-        {product &&
-          <>
+
             <BreadcrumbItem>
               <FormattedMessage id={`category.${product.category}`} />
             </BreadcrumbItem>
@@ -27,8 +27,7 @@ const ProductDetails: FC = () => {
             <BreadcrumbItem>
               {product.title}
             </BreadcrumbItem>
-          </>
-        }
+
 
       </Breadcrumbs>
 

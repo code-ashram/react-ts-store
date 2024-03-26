@@ -59,7 +59,7 @@
   text-align: right;
 }
 
-:local(.breadcrump) {
+:local(.breadcrumbs) {
   margin-bottom: 20px;
 }
 
@@ -70,7 +70,7 @@
 :local(.productWrapper) {
   display: grid;
   gap: 40px;
-  grid-template-columns: 1fr 400px 400px 1fr;
+  grid-template-columns: 300px 1fr;
 }
 
 :local(.productInfo) {
@@ -78,7 +78,16 @@
 }
 
 :local(.productImg) {
-  grid-column: 2;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-column: 1;
+  background-color: white;
+}
+
+:local(.productImg) img {
+
+  max-height: 300px;
 }
 
 :local(.productDetails) * {

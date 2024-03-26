@@ -8,10 +8,12 @@ import {
 } from "react-router-dom";
 
 import App from './pages/App.tsx'
+import ProductsList from './pages/ProductsList.tsx'
+import ProductDetails from './components/ProductDetails.tsx'
+
+import { loadProduct, loadProducts } from './api/utils.ts'
 
 import './index.css'
-import ProductsList from './pages/ProductsList.tsx'
-import { loadProducts } from './api/utils.ts'
 
 const queryClient = new QueryClient()
 
@@ -24,6 +26,11 @@ const router = createBrowserRouter([
         path: '/:category',
         element: <ProductsList />,
         loader: loadProducts
+      },
+      {
+        path: '/:category/:productId',
+        element: <ProductDetails />,
+        loader: loadProduct
       },
     ]
   },

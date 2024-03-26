@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <>
-
+      <IntlProvider locale={lang} messages={translations[lang]}>
         <main className={cn(theme, 'text-foreground', 'bg-background')}>
           <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
 
@@ -45,7 +45,7 @@ const App = () => {
             </section>
           </Container>
         </main>
-
+      </IntlProvider>
     </>
   )
 }

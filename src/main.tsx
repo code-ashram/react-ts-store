@@ -9,11 +9,14 @@ import {
 
 import App from './pages/App.tsx'
 import ProductsList from './pages/ProductsList.tsx'
-import ProductDetails from './components/ProductDetails.tsx'
+import ProductDetails from './pages/ProductDetails.tsx'
 
 import { loadProduct, loadProducts } from './api/utils.ts'
 
 import './index.css'
+import AboutUs from './pages/AboutUs.tsx'
+import DeliveryAndPayment from './pages/DeliveryAndPayment/DeliveryAndPayment.tsx'
+import Contacts from './pages/Contacts.tsx'
 
 const queryClient = new QueryClient()
 
@@ -31,6 +34,18 @@ const router = createBrowserRouter([
         path: '/:category/:productId',
         element: <ProductDetails />,
         loader: loadProduct
+      },
+      {
+        path: '/about',
+        element: <AboutUs />,
+      },
+      {
+        path: '/delivery-and-payment',
+        element: <DeliveryAndPayment />,
+      },
+      {
+        path: '/contacts',
+        element: <Contacts />,
       },
     ]
   },

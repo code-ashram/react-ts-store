@@ -24,7 +24,7 @@ const ProductCard: FC<Props> = ({ product }) => {
         />
       </CardHeader>
       <CardBody className="overflow-visible py-2">
-        <p className="text-default-500">{product.price} $</p>
+        <p className="text-default-500">${product.price}</p>
         <h3 className={cn(style.cardTitle, 'font-bold', 'text-base')}>{product.title}</h3>
         <h4 className={cn(style.cardRating)}>Rating: {product.rating.rate} / 5</h4>
       </CardBody>

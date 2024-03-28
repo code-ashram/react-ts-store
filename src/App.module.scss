@@ -101,3 +101,19 @@
 :local(.productPrice) {
   font-size: 24px;
 }
+
+:local(.infoTitle) {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 30px;
+}
+
+:local(.infoSubtitle) {
+  margin-bottom: 20px;
+}
+
+:local(.cardSystemImg) div:not(:first-child) {
+  margin-left: 20px;
+}
+
+

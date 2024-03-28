@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from '@nextui-org/react'
+import { NavLink } from 'react-router-dom'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as NextUILink, Button } from '@nextui-org/react'
 import { FormattedMessage } from 'react-intl/lib'
 
 import AcmeLogo from './assets/images/AcmeLogo.tsx'
@@ -22,34 +23,29 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
       </NavbarBrand>
       <NavbarContent className="sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <NavLink className={({isActive}) => isActive ? "active" : ""} to={`/about`}>
             <FormattedMessage id={"navBar.link.about"}/>
-          </Link>
+          </NavLink>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
+        <NavbarItem >
+          <NavLink className={({isActive}) => isActive ? "active" : ""} to={`/delivery-and-payment`}>
             <FormattedMessage id={'navBar.link.delivery'} />
-          </Link>
+          </NavLink>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <NavLink className={({isActive}) => isActive ? "active" : ""} to={`/contacts`}>
             <FormattedMessage id={"navBar.link.contacts"}/>
-          </Link>
+          </NavLink>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">
-
-          </Link>
-        </NavbarItem>
         <NavbarItem className={styles.navBar__userPanel}>
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
-          <Button as={Link} color="primary" variant="solid">
+          <Button as={NextUILink} color="primary" variant="solid">
             <FormattedMessage id={"navBar.link.signOut"}/>
           </Button>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button as={NextUILink} color="primary" href="#" variant="flat">
             <FormattedMessage id={"navBar.link.signIn"}/>
           </Button>
         </NavbarItem>

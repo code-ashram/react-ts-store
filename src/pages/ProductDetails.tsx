@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl/lib'
-import { BreadcrumbItem, Breadcrumbs, Button, Divider, Link } from '@nextui-org/react'
+import { BreadcrumbItem, Breadcrumbs, Button, Divider, Link as NextUILink } from '@nextui-org/react'
 import cn from 'classnames'
 
 import { Product } from '../models'
@@ -10,23 +10,26 @@ import style from '../App.module.scss'
 
 const ProductDetails: FC = () => {
   const { product } = useLoaderData() as Record<'product', Product>
-  console.log(product)
 
   return (
     <>
       <Breadcrumbs className={cn(style.breadcrumbs)} size="lg">
         <BreadcrumbItem>
-          <FormattedMessage id={'breadcrumbs.home'} />
+          <Link to={`/`}>
+            <FormattedMessage id={'breadcrumbs.home'} />
+          </Link>
         </BreadcrumbItem>
 
 
-            <BreadcrumbItem>
-              <FormattedMessage id={`category.${product.category}`} />
-            </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Link to={`/${product.category}`}>
+            <FormattedMessage id={`category.${product.category}`} />
+          </Link>
+        </BreadcrumbItem>
 
-            <BreadcrumbItem>
-              {product.title}
-            </BreadcrumbItem>
+        <BreadcrumbItem>
+          {product.title}
+        </BreadcrumbItem>
 
 
       </Breadcrumbs>
@@ -38,9 +41,9 @@ const ProductDetails: FC = () => {
           <FormattedMessage id={'product.rating'} /> {product?.rating.rate} / 5
         </p>
 
-        <Link href="#" size="md">
+        <NextUILink href="#" size="md">
           {product?.rating.count} <FormattedMessage id={'product.reviews'} />
-        </Link>
+        </NextUILink>
       </div>
 
       <div className={cn(style.productWrapper)}>

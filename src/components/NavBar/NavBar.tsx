@@ -27,17 +27,20 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
             <FormattedMessage id={"navBar.link.about"}/>
           </NavLink>
         </NavbarItem>
+
         <NavbarItem >
           <NavLink className={({isActive}) => isActive ? "active" : ""} to={`/delivery-and-payment`}>
             <FormattedMessage id={'navBar.link.delivery'} />
           </NavLink>
         </NavbarItem>
+
         <NavbarItem>
           <NavLink className={({isActive}) => isActive ? "active" : ""} to={`/contacts`}>
             <FormattedMessage id={"navBar.link.contacts"}/>
           </NavLink>
         </NavbarItem>
       </NavbarContent>
+
       <NavbarContent justify="end">
         <NavbarItem className={styles.navBar__userPanel}>
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
@@ -45,6 +48,7 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
           <Button as={NextUILink} color="primary" variant="solid">
             <FormattedMessage id={"navBar.link.signOut"}/>
           </Button>
+
           <Button as={NextUILink} color="primary" href="#" variant="flat">
             <FormattedMessage id={"navBar.link.signIn"}/>
           </Button>

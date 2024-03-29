@@ -12,3 +12,7 @@ main {
 nav a.active {
   color: #006fee;
 }
+
+.categoryList a.active {
+  color: #006fee;
+}

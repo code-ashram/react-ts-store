@@ -1,26 +1,30 @@
 import { FC } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { getCategories } from '../../api'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl/lib'
+import { useQuery } from '@tanstack/react-query'
+import cn from 'classnames'
+
+import { getCategories } from '../../api'
 import { Category } from '../../models'
+
+import style from '../../App.module.scss'
 
 const CategoryList: FC = () => {
   const { data } = useQuery({ queryKey: ['categories'], queryFn: getCategories })
 
   return (
-    <ul>
+    <ul className={cn('categoryList')}>
       <li key={Category.All}>
-        <Link to={`/${Category.All}`}>
+        <NavLink className={({ isActive }) => isActive ? 'active' : ''} to={`/${Category.All}`}>
           <FormattedMessage id={`category.all`} />
-        </Link>
+        </NavLink>
       </li>
 
       {data?.map((category) =>
         <li key={category}>
-          <Link to={`/${category}`}>
+          <NavLink className={({ isActive }) => isActive ? 'active' : ''} to={`/${category}`}>
             <FormattedMessage id={`category.${category}`} />
-          </Link>
+          </NavLink>
         </li>)}
     </ul>
   )

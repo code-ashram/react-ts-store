@@ -16,8 +16,6 @@
   width: 200px;
   min-width: 173px;
   min-height: 100vh;
-  //min-height: calc(100vh - 64px);
-  //border-right: 1px solid #262626;
 }
 
 :local(.storeDropdown) {
@@ -86,7 +84,6 @@
 }
 
 :local(.productImg) img {
-
   max-height: 300px;
 }
 
@@ -116,4 +113,18 @@
   margin-left: 20px;
 }
 
+:local(.aboutImg) {
+  float: left;
+  margin-right: 30px;
+}
+
+:local(.aboutText) {
+ text-align: justify;
+  margin-bottom: 20px;
+}
+
+:local(.contactsImg) {
+  float: right;
+  margin-left: 30px;
+}
 

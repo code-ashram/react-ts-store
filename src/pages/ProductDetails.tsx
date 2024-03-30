@@ -15,7 +15,7 @@ const ProductDetails: FC = () => {
     <>
       <Breadcrumbs className={cn(style.breadcrumbs)} size="lg">
         <BreadcrumbItem>
-          <Link to={`/`}>
+          <Link to={`/home`}>
             <FormattedMessage id={'breadcrumbs.home'} />
           </Link>
         </BreadcrumbItem>

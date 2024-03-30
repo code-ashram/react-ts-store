@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as NextUILink, Button } from '@nextui-org/react'
 import { FormattedMessage } from 'react-intl/lib'
 
@@ -18,9 +18,12 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
   return (
     <Navbar isBordered maxWidth="2xl">
       <NavbarBrand>
-        <AcmeLogo />
-        <p className="font-bold text-inherit">Code Asharam</p>
+        <Link  className={styles.navLogo} to={'/home'}>
+          <AcmeLogo />
+          <p className="font-bold text-inherit">Code Asharam</p>
+        </Link>
       </NavbarBrand>
+
       <NavbarContent className="sm:flex gap-4" justify="center">
         <NavbarItem>
           <NavLink className={({isActive}) => isActive ? "active" : ""} to={`/about`}>

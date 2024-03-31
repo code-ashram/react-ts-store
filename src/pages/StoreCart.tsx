@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-const Cart: FC = () => {
+const StoreCart: FC = () => {
   return (
     <>
 
@@ -8,4 +8,4 @@ const Cart: FC = () => {
   )
 }
 
-export default Cart
+export default StoreCart

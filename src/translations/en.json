@@ -13,5 +13,10 @@
     "category.women's clothing": "Women's clothing",
     "category.jewelery": "Jewelery",
     "category.electronics": "Electronics",
-    "delivery.cards": "We accept:"
+    "delivery.cards": "We accept:",
+    "form.title": "Authorization",
+    "form.login.label": "Login",
+    "form.login.placeholder": "Enter your login",
+    "form.password.label": "Password",
+    "form.password.placeholder": "Enter your password"
 }

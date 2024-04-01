@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Divider } from '@nextui-org/react'
 import cn from 'classnames'
@@ -16,6 +16,10 @@ const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
   const lang = useMemo(() => browserLang, [])
 
+  useEffect(() => {
+    document.body.className = `${theme} text-foreground bg-background`
+  }, [theme])
+
   const handleSwitchColorTheme = () => {
     setTheme((prevTheme) => {
         const nextTheme: Theme = prevTheme === Theme.Light
@@ -23,6 +27,7 @@ const App = () => {
           : Theme.Light
 
         localStorage.setItem('theme', nextTheme)
+
         return nextTheme
       }
     )

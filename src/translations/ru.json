@@ -13,5 +13,10 @@
     "category.women's clothing": "Женская одежда",
     "category.jewelery": "Ювелирия",
     "category.electronics": "Электроника",
-    "delivery.cards": "Мы принимаем:"
+    "delivery.cards": "Мы принимаем:",
+    "form.title": "Авторизация",
+    "form.login.label": "Логин",
+    "form.login.placeholder": "Введите свой логин",
+    "form.password.label": "Пароль",
+    "form.password.placeholder": "Введите свой пароль"
 }

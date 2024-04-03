@@ -12,3 +12,4 @@ export const loadProduct = async ({ params }: LoaderFunctionArgs): Promise<Recor
   const product = await getProduct(Number(params.productId))
   return { product }
 }
+

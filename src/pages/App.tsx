@@ -1,20 +1,24 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Divider } from '@nextui-org/react'
+import { Outlet } from 'react-router-dom'
 import cn from 'classnames'
 
 import Container from '../components/UI/Container.tsx'
 import NavBar from '../components/NavBar'
-import { Outlet } from 'react-router-dom'
+import CategoryList from '../components/UI/CategoryList.tsx'
+
+import UserContext from '../store/UserContext.ts'
 
 import { browserLang, defineTheme, Theme, translations } from '../utils.ts'
 
 import style from '../App.module.scss'
-import CategoryList from '../components/UI/CategoryList.tsx'
+import userReducer from '../store/UserReducer.ts'
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
   const lang = useMemo(() => browserLang, [])
+  const [user, dispatchUser] = useReducer(userReducer, '')
 
   useEffect(() => {
     document.body.className = `${theme} text-foreground bg-background`
@@ -36,20 +40,22 @@ const App = () => {
   return (
     <>
       <IntlProvider locale={lang} messages={translations[lang]}>
-        <main className={cn(theme, 'text-foreground', 'bg-background')}>
-          <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
+        <UserContext.Provider value={{user, dispatch: dispatchUser}}>
+          <main className={cn(theme, 'text-foreground', 'bg-background')}>
+            <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
 
-          <Container>
-            <ul className={style.storeFilter}>
-              <CategoryList />
-              <Divider orientation="vertical" />
-            </ul>
+            <Container>
+              <ul className={style.storeFilter}>
+                <CategoryList />
+                <Divider orientation="vertical" />
+              </ul>
 
-            <section className={style.storeSection}>
-              <Outlet />
-            </section>
-          </Container>
-        </main>
+              <section className={style.storeSection}>
+                <Outlet />
+              </section>
+            </Container>
+          </main>
+        </UserContext.Provider>
       </IntlProvider>
     </>
   )

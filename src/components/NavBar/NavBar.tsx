@@ -49,11 +49,7 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
         <NavbarItem className={styles.navBar__userPanel}>
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
-          <LoginForm/>
-
-          {/* <Button as={NextUILink} color="primary" href="#" variant="solid"> */}
-          {/*   <FormattedMessage id={'navBar.link.signIn'} /> */}
-          {/* </Button> */}
+          <LoginForm />
         </NavbarItem>
       </NavbarContent>
     </Navbar>

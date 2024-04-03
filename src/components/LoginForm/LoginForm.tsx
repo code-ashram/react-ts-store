@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import { FormattedMessage } from 'react-intl/lib'
 import {
   Modal,
@@ -14,13 +14,36 @@ import {
 import EyeSlashFilledIcon from './parts/EyeSlashFilledIcon.tsx'
 import EyeFilledIcon from './parts/EyeFilledIcon.tsx'
 import { useIntl } from 'react-intl'
+import { postAuth } from '../../api'
+import { useQueryClient } from '@tanstack/react-query'
+import User from '../../models/user.ts'
+import { jwtDecode } from 'jwt-decode'
+
+// type Props = {
+//   onSubmit: (userData: User) => void
+// }
 
 const LoginForm: FC = () => {
   const { formatMessage } = useIntl()
-  const [isVisible, setIsVisible] = useState(false)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const [auth, setAuth] =
+    useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
+  const queryClient = useQueryClient()
 
-  const toggleVisibility = () => setIsVisible(!isVisible)
+  const handleChangeUserData = (payload: Partial<User>) => {
+    setAuth(prevUserData => ({ ...prevUserData, ...payload }))
+  }
+
+  const handleSubmitUserData = (e: FormEvent) => {
+    e.preventDefault()
+    queryClient
+      .fetchQuery({ queryKey: ['auth'], queryFn: () => postAuth(auth.username, auth.password) })
+      .then(response => jwtDecode(response.token).sub)
+      .catch(() => console.log('The username or password is incorrect!'))
+  }
+
+  const handleToggleVisibility = () => setIsVisible(!isVisible)
 
   return (
     <>
@@ -32,47 +55,54 @@ const LoginForm: FC = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                <FormattedMessage id={'form.title'} />
-              </ModalHeader>
+              <form onSubmit={handleSubmitUserData}>
 
-              <ModalBody>
-                <Input
-                  className="max-w-xs"
-                  type="text"
-                  isRequired
-                  placeholder={formatMessage({ id: 'form.login.placeholder' })}
-                  label={formatMessage({ id: 'form.login.label' })}
-                  variant="bordered"
-                />
+                <ModalHeader className="flex flex-col gap-1">
+                  <FormattedMessage id={'form.title'} />
+                </ModalHeader>
 
-                <Input
-                  isRequired
-                  label={formatMessage({ id: 'form.password.label' })}
-                  placeholder={formatMessage({ id: 'form.password.placeholder' })}
-                  variant="bordered"
-                  endContent={
-                    <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                      {isVisible ? (
-                        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                      ) : (
-                        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                      )}
-                    </button>
-                  }
-                  type={isVisible ? 'text' : 'password'}
-                  className="max-w-xs"
-                />
-              </ModalBody>
+                <ModalBody>
+                  <Input
+                    className="max-w-xs"
+                    type="text"
+                    value={auth.username}
+                    onChange={(e) => handleChangeUserData({ username: e.target.value })}
+                    isRequired
+                    placeholder={formatMessage({ id: 'form.login.placeholder' })}
+                    label={formatMessage({ id: 'form.login.label' })}
+                    variant="bordered"
+                  />
 
-              <ModalFooter className="justify-start">
-                <Button color="primary" variant="flat" onPress={onClose}>
-                  Зарегестрироваться
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Войти
-                </Button>
-              </ModalFooter>
+                  <Input
+                    value={auth.password}
+                    onChange={(e) => handleChangeUserData({ password: e.target.value })}
+                    isRequired
+                    label={formatMessage({ id: 'form.password.label' })}
+                    placeholder={formatMessage({ id: 'form.password.placeholder' })}
+                    variant="bordered"
+                    endContent={
+                      <button className="focus:outline-none" type="button" onClick={handleToggleVisibility}>
+                        {isVisible ? (
+                          <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                        ) : (
+                          <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                        )}
+                      </button>
+                    }
+                    type={isVisible ? 'text' : 'password'}
+                    className="max-w-xs"
+                  />
+                </ModalBody>
+
+                <ModalFooter className="justify-start">
+                  <Button color="primary" variant="flat" onPress={onClose}>
+                    Зарегестрироваться
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Войти
+                  </Button>
+                </ModalFooter>
+              </form>
             </>
           )}
         </ModalContent>

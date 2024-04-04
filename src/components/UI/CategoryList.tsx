@@ -7,8 +7,6 @@ import cn from 'classnames'
 import { getCategories } from '../../api'
 import { Category } from '../../models'
 
-import style from '../../App.module.scss'
-
 const CategoryList: FC = () => {
   const { data } = useQuery({ queryKey: ['categories'], queryFn: getCategories })
 

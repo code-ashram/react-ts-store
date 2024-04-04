@@ -1,47 +1,77 @@
-import { FC, FormEvent, useState } from 'react'
+import { FC, FormEvent, useContext, useState } from 'react'
 import { FormattedMessage } from 'react-intl/lib'
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   useDisclosure
 } from '@nextui-org/react'
 
 import EyeSlashFilledIcon from './parts/EyeSlashFilledIcon.tsx'
 import EyeFilledIcon from './parts/EyeFilledIcon.tsx'
 import { useIntl } from 'react-intl'
-import { postAuth } from '../../api'
+import { getUser, postAuth } from '../../api'
 import { useQueryClient } from '@tanstack/react-query'
 import User from '../../models/user.ts'
 import { jwtDecode } from 'jwt-decode'
-
-// type Props = {
-//   onSubmit: (userData: User) => void
-// }
+import { UserContext } from '../../store/UserContext.ts'
+import { ACTION_TYPE } from '../../store/UserReducer.ts'
 
 const LoginForm: FC = () => {
-  const { formatMessage } = useIntl()
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [isVisible, setIsVisible] = useState<boolean>(false)
   const [auth, setAuth] =
     useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const { formatMessage } = useIntl()
   const queryClient = useQueryClient()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { dispatch } = useContext(UserContext)
 
   const handleChangeUserData = (payload: Partial<User>) => {
     setAuth(prevUserData => ({ ...prevUserData, ...payload }))
   }
 
-  const handleSubmitUserData = (e: FormEvent) => {
+  const handleSubmitUserData = async (e: FormEvent) => {
     e.preventDefault()
-    queryClient
-      .fetchQuery({ queryKey: ['auth'], queryFn: () => postAuth(auth.username, auth.password) })
-      .then(response => jwtDecode(response.token).sub)
-      .catch(() => console.log('The username or password is incorrect!'))
+
+    try {
+      const { token } = await queryClient.fetchQuery({
+        queryKey: ['auth'],
+        queryFn: () => postAuth(auth.username, auth.password)
+      })
+      const { sub } = jwtDecode<Record<'sub', number>>(token)
+      const user = await queryClient.fetchQuery({ queryKey: ['user', `${sub}`], queryFn: () => getUser(sub) })
+
+      dispatch({
+        type: ACTION_TYPE.SET,
+        payload: user
+      })
+
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  // const handleSubmitUserData = (e: FormEvent) => {
+  //   e.preventDefault()
+  //   queryClient
+  //     .fetchQuery({ queryKey: ['auth'], queryFn: () => postAuth(auth.username, auth.password) })
+  //     .then(response => queryClient
+  //       .fetchQuery({
+  //         queryKey: ['user'],
+  //         queryFn: () => getUser(jwtDecode<Record<'sub', number>>(response.token).sub)
+  //       })
+  //       .then((user) => dispatch({
+  //         type: ACTION_TYPE.SET,
+  //         payload: user
+  //       }))
+  //       .catch((err) => console.error('User was not found', err))
+  //     )
+  //     .catch((err) => console.error('The username or password is incorrect!', err))
+  // }
 
   const handleToggleVisibility = () => setIsVisible(!isVisible)
 

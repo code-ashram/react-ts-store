@@ -1,14 +1,15 @@
 import { createContext, Dispatch } from 'react'
 
 import { Action } from './UserReducer.ts'
+import User from '../models/user.ts'
 
 type ContextType = {
-  user: string,
+  user: User | null,
   dispatch: Dispatch<Action>
 }
 
 const initialValue: ContextType = {
-  user: '',
+  user: null,
   dispatch: () => {}
 }
 

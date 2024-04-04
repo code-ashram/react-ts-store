@@ -8,7 +8,7 @@ export enum Theme {
 }
 
 export const defineTheme = (): Theme => {
-  const darkTheme: Theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? Theme.Dark : Theme.Light
+  const darkTheme: Theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light
   return localStorage.getItem('theme') as Theme | null ?? darkTheme
 }
 
@@ -19,7 +19,7 @@ enum Language {
 
 export const translations: Record<Language, Record<string, string>> = {
   en,
-  ru,
+  ru
 }
 
 export const browserLang: Language = navigator.language !== Language.ru ? Language.en : Language.ru
@@ -30,5 +30,6 @@ type Option = {
 }
 
 export const createOptions = (data: Category[] | undefined): Option[] => (Array.isArray(data)
-  ? [{key: Category.All, title: Category.All}, ...data.map((category) => ({key: category, title: category}))]
-  : [{key: Category.All, title: Category.All}])
+  ? [{ key: Category.All, title: Category.All }, ...data.map((category) => ({ key: category, title: category }))]
+  : [{ key: Category.All, title: Category.All }])
+

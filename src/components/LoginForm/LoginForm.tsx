@@ -19,7 +19,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import User from '../../models/user.ts'
 import { jwtDecode } from 'jwt-decode'
 import { UserContext } from '../../store/UserContext.ts'
-import { ACTION_TYPE } from '../../store/UserReducer.ts'
+import { ActionType } from '../../store/UserReducer.ts'
 
 const LoginForm: FC = () => {
   const [auth, setAuth] =
@@ -28,7 +28,9 @@ const LoginForm: FC = () => {
   const { formatMessage } = useIntl()
   const queryClient = useQueryClient()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const { dispatch } = useContext(UserContext)
+  const { user, dispatch } = useContext(UserContext)
+
+  console.log(user)
 
   const handleChangeUserData = (payload: Partial<User>) => {
     setAuth(prevUserData => ({ ...prevUserData, ...payload }))
@@ -46,13 +48,14 @@ const LoginForm: FC = () => {
       const user = await queryClient.fetchQuery({ queryKey: ['user', `${sub}`], queryFn: () => getUser(sub) })
 
       dispatch({
-        type: ACTION_TYPE.SET,
+        type: ActionType.SetUser,
         payload: user
       })
 
     } catch (error) {
       console.error(error)
     }
+
   }
 
   // const handleSubmitUserData = (e: FormEvent) => {

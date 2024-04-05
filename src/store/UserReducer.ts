@@ -1,19 +1,19 @@
 import User from '../models/user.ts'
 
-export const enum ACTION_TYPE {
-  SET,
+export const enum ActionType {
+  SetUser = 'set-user',
 }
 
-export type SetUserAction = {
-  type: ACTION_TYPE
+export type SetCurrentUser = {
+  type: ActionType
   payload: User | null
 }
 
-export type Action = SetUserAction
+export type Action = SetCurrentUser
 
 const userReducer = (state: User | null, action: Action): User | null => {
   switch (action.type) {
-    case ACTION_TYPE.SET:
+    case ActionType.SetUser:
       return action.payload
     default:
       return state

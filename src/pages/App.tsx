@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Divider } from '@nextui-org/react'
 import { Outlet } from 'react-router-dom'
@@ -13,11 +13,12 @@ import UserContext from '../store/UserContext.ts'
 import { browserLang, defineTheme, Theme, translations } from '../utils.ts'
 
 import style from '../App.module.scss'
+import UserReducer from '../store/UserReducer.ts'
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
   const lang = useMemo(() => browserLang, [])
-  const { user, dispatch } = useContext(UserContext)
+  const [user, dispatch] = useReducer(UserReducer, null)
 
   useEffect(() => {
     document.body.className = `${theme} text-foreground bg-background`

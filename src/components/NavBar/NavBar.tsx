@@ -1,13 +1,23 @@
-import { FC } from 'react'
+import { FC, useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { Avatar, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { FormattedMessage } from 'react-intl/lib'
+import { jwtDecode } from 'jwt-decode'
+
+import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
+
+import { ActionType } from '../../store/UserReducer.ts'
+import UserContext from '../../store/UserContext.ts'
+
+import User from '../../models/user.ts'
+import { getUser, postAuth } from '../../api'
 
 import AcmeLogo from './assets/images/AcmeLogo.tsx'
 import LoginForm from '../LoginForm/LoginForm.tsx'
-import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
 
 import styles from '../../App.module.scss'
+import cn from 'classnames'
 
 type Props = {
   onSwitch: () => void
@@ -15,6 +25,36 @@ type Props = {
 }
 
 const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
+  const [auth, setAuth] =
+    useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
+  const { user, dispatch } = useContext(UserContext)
+  const queryClient = useQueryClient()
+  const [validation, setValidation] = useState<boolean>(false)
+
+  const handleChangeAuth = (payload: Partial<User>) => {
+    setAuth(prevUserData => ({ ...prevUserData, ...payload }))
+  }
+
+  const handleSubmitAuth = async () => {
+
+    try {
+      const { token } = await queryClient.fetchQuery({
+        queryKey: ['auth'],
+        queryFn: () => postAuth(auth.username, auth.password)
+      })
+      const { sub } = jwtDecode<Record<'sub', number>>(token)
+      const user = await queryClient.fetchQuery({ queryKey: ['user', `${sub}`], queryFn: () => getUser(sub) })
+
+      dispatch({
+        type: ActionType.SetUser,
+        payload: user
+      })
+
+    } catch (error) {
+      console.error(error)
+      setValidation(true)
+    }
+  }
 
   return (
     <Navbar isBordered maxWidth="2xl">
@@ -46,10 +86,18 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className={styles.navBar__userPanel}>
+        <NavbarItem className={cn(styles.navBar__userPanel, 'flex')}>
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
-          <LoginForm />
+          {user
+            ? <Avatar isBordered color="primary" src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
+            : <LoginForm
+              auth={auth}
+              onChange={handleChangeAuth}
+              onSubmit={handleSubmitAuth}
+              onFocus={() => setValidation(false)}
+              isInvalid={validation}/>
+          }
         </NavbarItem>
       </NavbarContent>
     </Navbar>

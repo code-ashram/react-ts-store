@@ -1,5 +1,6 @@
-import { FC, FormEvent, useContext, useState } from 'react'
+import { FC, useState } from 'react'
 import { FormattedMessage } from 'react-intl/lib'
+import { useIntl } from 'react-intl'
 import {
   Button,
   Input,
@@ -10,71 +11,27 @@ import {
   ModalHeader,
   useDisclosure
 } from '@nextui-org/react'
+import cn from 'classnames'
+
+import User from '../../models/user.ts'
 
 import EyeSlashFilledIcon from './parts/EyeSlashFilledIcon.tsx'
 import EyeFilledIcon from './parts/EyeFilledIcon.tsx'
-import { useIntl } from 'react-intl'
-import { getUser, postAuth } from '../../api'
-import { useQueryClient } from '@tanstack/react-query'
-import User from '../../models/user.ts'
-import { jwtDecode } from 'jwt-decode'
-import { UserContext } from '../../store/UserContext.ts'
-import { ActionType } from '../../store/UserReducer.ts'
 
-const LoginForm: FC = () => {
-  const [auth, setAuth] =
-    useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
+import style from '../../App.module.scss'
+
+type Props = {
+  auth: Pick<User, 'username' | 'password'>
+  onChange: (payload: Partial<User>) => void
+  onSubmit: (e: Pick<User, "username" | "password">) => Promise<void>
+  isInvalid: boolean
+  onFocus: () => void
+}
+
+const LoginForm: FC<Props> = ({auth, onChange, onSubmit, onFocus, isInvalid}) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const { formatMessage } = useIntl()
-  const queryClient = useQueryClient()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const { user, dispatch } = useContext(UserContext)
-
-  console.log(user)
-
-  const handleChangeUserData = (payload: Partial<User>) => {
-    setAuth(prevUserData => ({ ...prevUserData, ...payload }))
-  }
-
-  const handleSubmitUserData = async (e: FormEvent) => {
-    e.preventDefault()
-
-    try {
-      const { token } = await queryClient.fetchQuery({
-        queryKey: ['auth'],
-        queryFn: () => postAuth(auth.username, auth.password)
-      })
-      const { sub } = jwtDecode<Record<'sub', number>>(token)
-      const user = await queryClient.fetchQuery({ queryKey: ['user', `${sub}`], queryFn: () => getUser(sub) })
-
-      dispatch({
-        type: ActionType.SetUser,
-        payload: user
-      })
-
-    } catch (error) {
-      console.error(error)
-    }
-
-  }
-
-  // const handleSubmitUserData = (e: FormEvent) => {
-  //   e.preventDefault()
-  //   queryClient
-  //     .fetchQuery({ queryKey: ['auth'], queryFn: () => postAuth(auth.username, auth.password) })
-  //     .then(response => queryClient
-  //       .fetchQuery({
-  //         queryKey: ['user'],
-  //         queryFn: () => getUser(jwtDecode<Record<'sub', number>>(response.token).sub)
-  //       })
-  //       .then((user) => dispatch({
-  //         type: ACTION_TYPE.SET,
-  //         payload: user
-  //       }))
-  //       .catch((err) => console.error('User was not found', err))
-  //     )
-  //     .catch((err) => console.error('The username or password is incorrect!', err))
-  // }
 
   const handleToggleVisibility = () => setIsVisible(!isVisible)
 
@@ -88,31 +45,41 @@ const LoginForm: FC = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <form onSubmit={handleSubmitUserData}>
+              <form onSubmit={(e) => {
+                e.preventDefault()
+                onSubmit(auth).then(r => r)
+              }}>
 
                 <ModalHeader className="flex flex-col gap-1">
                   <FormattedMessage id={'form.title'} />
                 </ModalHeader>
 
-                <ModalBody>
-                  <Input
-                    className="max-w-xs"
-                    type="text"
-                    value={auth.username}
-                    onChange={(e) => handleChangeUserData({ username: e.target.value })}
-                    isRequired
-                    placeholder={formatMessage({ id: 'form.login.placeholder' })}
-                    label={formatMessage({ id: 'form.login.label' })}
-                    variant="bordered"
-                  />
+                <ModalBody className='gap-1'>
+                  <div className={cn(style.errorWrapper)}>
+                    <Input
+                      className="max-w-xs"
+                      type="text"
+                      value={auth.username}
+                      onChange={(e) => onChange({ username: e.target.value })}
+                      isRequired
+                      placeholder={formatMessage({ id: 'form.login.placeholder' })}
+                      label={formatMessage({ id: 'form.login.label' })}
+                      variant="bordered"
+                      isInvalid={isInvalid}
+                      onFocus={onFocus}
+                      errorMessage={isInvalid ? "Please enter a valid username or password" : null}
+                    />
+                  </div>
 
                   <Input
                     value={auth.password}
-                    onChange={(e) => handleChangeUserData({ password: e.target.value })}
+                    onChange={(e) => onChange({ password: e.target.value })}
                     isRequired
                     label={formatMessage({ id: 'form.password.label' })}
                     placeholder={formatMessage({ id: 'form.password.placeholder' })}
                     variant="bordered"
+                    isInvalid={isInvalid}
+                    onFocus={onFocus}
                     endContent={
                       <button className="focus:outline-none" type="button" onClick={handleToggleVisibility}>
                         {isVisible ? (
@@ -129,10 +96,10 @@ const LoginForm: FC = () => {
 
                 <ModalFooter className="justify-start">
                   <Button color="primary" variant="flat" onPress={onClose}>
-                    Зарегестрироваться
+                    <FormattedMessage id={'form.btn.register'} />
                   </Button>
                   <Button color="primary" type="submit">
-                    Войти
+                    <FormattedMessage id={'form.btn.signIn'} />
                   </Button>
                 </ModalFooter>
               </form>

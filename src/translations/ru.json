@@ -18,5 +18,7 @@
     "form.login.label": "Логин",
     "form.login.placeholder": "Введите свой логин",
     "form.password.label": "Пароль",
-    "form.password.placeholder": "Введите свой пароль"
+    "form.password.placeholder": "Введите свой пароль",
+    "form.btn.signIn": "Войти",
+    "form.btn.register": "Регистрация"
 }

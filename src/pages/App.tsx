@@ -6,7 +6,7 @@ import cn from 'classnames'
 
 import Container from '../components/UI/Container.tsx'
 import NavBar from '../components/NavBar'
-import CategoryList from '../components/UI/CategoryList.tsx'
+import CategoryList from '../components/CategoryList.tsx'
 
 import UserContext from '../store/UserContext.ts'
 

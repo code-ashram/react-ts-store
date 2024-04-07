@@ -1,15 +1,16 @@
 import { FC, useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Avatar, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { FormattedMessage } from 'react-intl/lib'
 import { jwtDecode } from 'jwt-decode'
+import { FormattedMessage } from 'react-intl/lib'
+import cn from 'classnames'
 
 import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
+import UserDropdown from '../UserDropdown.tsx'
 
 import { ActionType } from '../../store/UserReducer.ts'
 import UserContext from '../../store/UserContext.ts'
-
 import User from '../../models/user.ts'
 import { getUser, postAuth } from '../../api'
 
@@ -17,7 +18,6 @@ import AcmeLogo from './assets/images/AcmeLogo.tsx'
 import LoginForm from '../LoginForm/LoginForm.tsx'
 
 import styles from '../../App.module.scss'
-import cn from 'classnames'
 
 type Props = {
   onSwitch: () => void
@@ -28,8 +28,8 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
   const [auth, setAuth] =
     useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
   const { user, dispatch } = useContext(UserContext)
-  const queryClient = useQueryClient()
   const [validation, setValidation] = useState<boolean>(false)
+  const queryClient = useQueryClient()
 
   const handleChangeAuth = (payload: Partial<User>) => {
     setAuth(prevUserData => ({ ...prevUserData, ...payload }))
@@ -90,13 +90,19 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
           {user
-            ? <Avatar isBordered color="primary" src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
+            ? <UserDropdown
+              user={user}
+              onLogout={() => dispatch({
+                type: ActionType.SetUser,
+                payload: null
+              })}
+            />
             : <LoginForm
               auth={auth}
               onChange={handleChangeAuth}
               onSubmit={handleSubmitAuth}
               onFocus={() => setValidation(false)}
-              isInvalid={validation}/>
+              isInvalid={validation} />
           }
         </NavbarItem>
       </NavbarContent>

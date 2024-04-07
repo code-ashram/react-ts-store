@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl/lib'
 import { useQuery } from '@tanstack/react-query'
 import cn from 'classnames'
 
-import { getCategories } from '../../api'
-import { Category } from '../../models'
+import { getCategories } from '../api'
+import { Category } from '../models'
 
 const CategoryList: FC = () => {
   const { data } = useQuery({ queryKey: ['categories'], queryFn: getCategories })

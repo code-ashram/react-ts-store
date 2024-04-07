@@ -20,5 +20,8 @@
     "form.password.label": "Password",
     "form.password.placeholder": "Enter your password",
     "form.btn.signIn": "Login",
-    "form.btn.register": "Register"
+    "form.btn.register": "Register",
+    "form.validation.error": "Enter a valid username or password",
+    "user.dropdown.signed": "Signed in as",
+    "user.dropdown.logout": "Log Out"
 }

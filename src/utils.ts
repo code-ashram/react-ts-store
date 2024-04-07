@@ -1,6 +1,7 @@
 import en from './translations/en.json'
 import ru from './translations/ru.json'
 import { Category } from './models'
+import User from './models/user.ts'
 
 export enum Theme {
   Light = 'light',
@@ -33,3 +34,10 @@ export const createOptions = (data: Category[] | undefined): Option[] => (Array.
   ? [{ key: Category.All, title: Category.All }, ...data.map((category) => ({ key: category, title: category }))]
   : [{ key: Category.All, title: Category.All }])
 
+export const transformToUppercase = (word: string | undefined) =>
+  word ? word.charAt(0).toUpperCase() + word.slice(1) : null
+
+export const userFullName = (user: User | null) =>
+  user ? `${transformToUppercase(user.name.firstname)} ${transformToUppercase(user.name.lastname)}` : null
+
+export const replaceForDash = (user: User | null, userInfo: string | undefined) => user ? userInfo : '-'

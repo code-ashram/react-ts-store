@@ -134,7 +134,7 @@
 }
 
 :local(.sliderImg) img {
-  height: 100%;
+  height: 70%;
 }
 
 :local(.navLogo) {
@@ -144,4 +144,16 @@
 
 :local(.errorWrapper) {
   min-height: 80px;
+}
+
+:local(.profileHeader) {
+  margin-bottom: 14px;
+}
+
+:local(.profileHeader) h2{
+  font-size: 27px;
+}
+
+:local(.profileTable){
+  max-width: 700px;
 }

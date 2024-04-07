@@ -67,7 +67,7 @@ const LoginForm: FC<Props> = ({auth, onChange, onSubmit, onFocus, isInvalid}) =>
                       variant="bordered"
                       isInvalid={isInvalid}
                       onFocus={onFocus}
-                      errorMessage={isInvalid ? "Please enter a valid username or password" : null}
+                      errorMessage={isInvalid ? formatMessage({ id: 'form.validation.error' }) : null}
                     />
                   </div>
 

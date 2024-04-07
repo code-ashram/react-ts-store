@@ -20,5 +20,8 @@
     "form.password.label": "Пароль",
     "form.password.placeholder": "Введите свой пароль",
     "form.btn.signIn": "Войти",
-    "form.btn.register": "Регистрация"
+    "form.btn.register": "Регистрация",
+    "form.validation.error": "Неверный логин или пароль",
+    "user.dropdown.signed": "Вы вошли как:",
+    "user.dropdown.logout": "Выйти"
 }

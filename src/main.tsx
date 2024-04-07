@@ -18,6 +18,7 @@ import AboutUs from './pages/AboutUs.tsx'
 import DeliveryAndPayment from './pages/DeliveryAndPayment/DeliveryAndPayment.tsx'
 import Contacts from './pages/Contacts.tsx'
 import Home from './pages/Home.tsx'
+import UserProfile from './pages/UserProfile.tsx'
 
 const queryClient = new QueryClient()
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/contacts',
         element: <Contacts />,
+      },
+      {
+        path: '/user-profile',
+        element: <UserProfile />
       },
     ]
   },

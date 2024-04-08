@@ -39,5 +39,3 @@ export const transformToUppercase = (word: string | undefined) =>
 
 export const userFullName = (user: User | null) =>
   user ? `${transformToUppercase(user.name.firstname)} ${transformToUppercase(user.name.lastname)}` : null
-
-export const replaceForDash = (user: User | null, userInfo: string | undefined) => user ? userInfo : '-'

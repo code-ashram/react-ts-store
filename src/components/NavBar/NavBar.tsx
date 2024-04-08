@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl/lib'
 import cn from 'classnames'
 
 import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
-import UserDropdown from '../UserDropdown.tsx'
+import UserMenu from '../UserMenu.tsx'
 
 import { ActionType } from '../../store/UserReducer.ts'
 import UserContext from '../../store/UserContext.ts'
@@ -90,9 +90,8 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
           {user
-            ? <UserDropdown
-              user={user}
-              onLogout={() => dispatch({
+            ? <UserMenu
+                onLogout={() => dispatch({
                 type: ActionType.SetUser,
                 payload: null
               })}

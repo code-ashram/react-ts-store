@@ -2,19 +2,20 @@ import { FC } from 'react'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User as UserUI } from '@nextui-org/react'
 import { FormattedMessage } from 'react-intl/lib'
 
-import User from '../models/user.ts'
-import { userFullName } from '../utils.ts'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 type Props = {
-  user: User
   onLogout: () => void
 }
 
-const UserDropdown: FC<Props> = ({ user, onLogout }) => {
-  const params = useParams()
+const UserMenu: FC<Props> = ({ onLogout }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
-  console.log(params)
+  const handleLogout = () => {
+    onLogout()
+    if (pathname === '/user-profile') navigate('/home')
+  }
 
   return (
     <div className="flex items-center gap-4">
@@ -28,24 +29,21 @@ const UserDropdown: FC<Props> = ({ user, onLogout }) => {
               color: 'primary'
             }}
             className="transition-transform"
-            description={`@${user.name.firstname}${user.name.lastname}`}
-            name={userFullName(user)}
+            description={null}
+            name={null}
           />
         </DropdownTrigger>
+
         <DropdownMenu aria-label="User Actions" variant="flat">
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-bold">
-              <FormattedMessage id={'user.dropdown.signed'} />
-            </p>
-            <p className="font-bold">
               <Link to={`/user-profile`}>
-                {`@${user.name.firstname}${user.name.lastname}`}
+                Profile
               </Link>
             </p>
           </DropdownItem>
 
-
-          <DropdownItem key="logout" color="danger" onClick={onLogout}>
+          <DropdownItem key="logout" color="danger" onClick={handleLogout}>
             <FormattedMessage id={'user.dropdown.logout'} />
           </DropdownItem>
         </DropdownMenu>
@@ -54,4 +52,4 @@ const UserDropdown: FC<Props> = ({ user, onLogout }) => {
   )
 }
 
-export default UserDropdown
+export default UserMenu

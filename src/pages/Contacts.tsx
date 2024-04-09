@@ -18,6 +18,7 @@ const Contacts: FC = () => {
           width={240}
           src="https://nextui-docs-v2.vercel.app/images/album-cover.png"
           alt="NextUI Album Cover"
+          fallbackSrc="https://via.placeholder.com/240x249"
         />
       </div>
 

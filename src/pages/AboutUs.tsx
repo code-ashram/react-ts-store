@@ -19,6 +19,7 @@ const AboutUs: FC = () => {
           width={300}
           alt="NextUI hero Image"
           src="https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+          fallbackSrc="https://via.placeholder.com/300x200"
         />
       </div>
 

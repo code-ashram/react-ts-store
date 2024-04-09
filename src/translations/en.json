@@ -22,6 +22,14 @@
     "form.btn.signIn": "Login",
     "form.btn.register": "Register",
     "form.validation.error": "Enter a valid username or password",
-    "user.dropdown.signed": "Signed in as",
-    "user.dropdown.logout": "Log Out"
+    "user.dropdown.profile": "Profile",
+    "user.dropdown.logout": "Log Out",
+    "user.profile.th": "INFO",
+    "user.profile.name": "Full name",
+    "user.profile.city": "City",
+    "user.profile.zipcode": "ZIP-code",
+    "user.profile.street": "Street",
+    "user.profile.home": "Home",
+    "user.profile.email": "Email",
+    "user.profile.phone": "Phone number"
 }

@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { Badge, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { jwtDecode } from 'jwt-decode'
 import { FormattedMessage } from 'react-intl/lib'
@@ -18,6 +18,8 @@ import AcmeLogo from './assets/images/AcmeLogo.tsx'
 import LoginForm from '../LoginForm/LoginForm.tsx'
 
 import styles from '../../App.module.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   onSwitch: () => void
@@ -90,12 +92,13 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
           <ThemeSwitcher onSwitch={onSwitch} isActive={isActive} />
 
           {user
-            ? <UserMenu
-                onLogout={() => dispatch({
-                type: ActionType.SetUser,
-                payload: null
-              })}
-            />
+            ? <div className={styles.navBar__userProfile}>
+                <Badge content="5" size="md" color="primary">
+                 <FontAwesomeIcon icon={faCartShopping} size="2xl" />
+                </Badge>
+                <UserMenu />
+              </div>
+
             : <LoginForm
               auth={auth}
               onChange={handleChangeAuth}

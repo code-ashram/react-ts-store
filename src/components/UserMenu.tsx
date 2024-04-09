@@ -1,19 +1,22 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User as UserUI } from '@nextui-org/react'
 import { FormattedMessage } from 'react-intl/lib'
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ActionType } from '../store/UserReducer.ts'
+import UserContext from '../store/UserContext.ts'
 
-type Props = {
-  onLogout: () => void
-}
-
-const UserMenu: FC<Props> = ({ onLogout }) => {
+const UserMenu: FC = () => {
+  const { dispatch } = useContext(UserContext)
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
   const handleLogout = () => {
-    onLogout()
+    dispatch({
+      type: ActionType.SetUser,
+      payload: null
+    })
+
     if (pathname === '/user-profile') navigate('/home')
   }
 
@@ -24,8 +27,9 @@ const UserMenu: FC<Props> = ({ onLogout }) => {
           <UserUI
             as="button"
             avatarProps={{
+              showFallback: true,
               isBordered: true,
-              src: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+              src: 'https://images.unsplash.com/broken',
               color: 'primary'
             }}
             className="transition-transform"
@@ -35,12 +39,10 @@ const UserMenu: FC<Props> = ({ onLogout }) => {
         </DropdownTrigger>
 
         <DropdownMenu aria-label="User Actions" variant="flat">
-          <DropdownItem key="profile" className="h-14 gap-2">
-            <p className="font-bold">
+          <DropdownItem key="profile">
               <Link to={`/user-profile`}>
-                Profile
+                <FormattedMessage id={'user.dropdown.profile'} />
               </Link>
-            </p>
           </DropdownItem>
 
           <DropdownItem key="logout" color="danger" onClick={handleLogout}>

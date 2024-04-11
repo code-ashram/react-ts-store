@@ -11,7 +11,7 @@ import UserMenu from '../UserMenu.tsx'
 
 import { ActionType } from '../../store/UserReducer.ts'
 import UserContext from '../../store/UserContext.ts'
-import User from '../../models/user.ts'
+import { User } from '../../models'
 import { getUser, postAuth } from '../../api'
 
 import AcmeLogo from './assets/images/AcmeLogo.tsx'
@@ -93,11 +93,13 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
 
           {user
             ? <div className={styles.navBar__userProfile}>
+              <Link to={`/cart/${user.id}`}>
                 <Badge content="5" size="md" color="primary">
-                 <FontAwesomeIcon icon={faCartShopping} size="2xl" />
+                  <FontAwesomeIcon icon={faCartShopping} size="2xl" />
                 </Badge>
-                <UserMenu />
-              </div>
+              </Link>
+              <UserMenu />
+            </div>
 
             : <LoginForm
               auth={auth}

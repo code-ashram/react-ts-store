@@ -11,7 +11,7 @@ import App from './pages/App.tsx'
 import ProductsList from './pages/ProductsList.tsx'
 import ProductDetails from './pages/ProductDetails.tsx'
 
-import { loadProduct, loadProducts } from './api/utils.ts'
+import { loadCart, loadProduct, loadProducts } from './api/utils.ts'
 
 import './index.css'
 import AboutUs from './pages/AboutUs.tsx'
@@ -19,6 +19,7 @@ import DeliveryAndPayment from './pages/DeliveryAndPayment/DeliveryAndPayment.ts
 import Contacts from './pages/Contacts.tsx'
 import Home from './pages/Home.tsx'
 import UserProfile from './pages/UserProfile.tsx'
+import UserCart from './pages/UserCart.tsx'
 
 const queryClient = new QueryClient()
 
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
       {
         path: '/user-profile',
         element: <UserProfile />
+      },
+      {
+        path: '/cart/:userId',
+        element: <UserCart />,
+        loader: loadCart
       },
     ]
   },

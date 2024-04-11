@@ -9,11 +9,11 @@ import NavBar from '../components/NavBar'
 import CategoryList from '../components/CategoryList.tsx'
 
 import UserContext from '../store/UserContext.ts'
+import UserReducer from '../store/UserReducer.ts'
 
 import { browserLang, defineTheme, Theme, translations } from '../utils.ts'
 
 import style from '../App.module.scss'
-import UserReducer from '../store/UserReducer.ts'
 
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)

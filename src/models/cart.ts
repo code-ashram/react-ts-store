@@ -3,12 +3,9 @@ type CartProduct = {
   quantity: number
 }
 
-type Cart = {
+export type Cart = {
   id: number,
   userId: number,
   date: string,
   products: CartProduct[]
-  __v: number
 }
-
-export default  Cart

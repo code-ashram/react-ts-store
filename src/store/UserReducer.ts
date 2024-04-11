@@ -1,4 +1,4 @@
-import User from '../models/user.ts'
+import { User } from '../models'
 
 export const enum ActionType {
   SetUser = 'set-user',

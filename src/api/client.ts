@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-import { Category, Product } from '../models'
-import User from '../models/user.ts'
+import { Category, Product, User, Cart } from '../models'
 
 const BASE_URL = 'https://fakestoreapi.com'
 
@@ -31,4 +30,8 @@ export const postAuth = async (username: string, password: string): Promise<Reco
 
 export const getUser = async (id: number): Promise<User> =>
   client.get<User>(`/users/${id}`)
+    .then((response) => response.data)
+
+export const getUserCart = async (id: number): Promise<Cart> =>
+  client.get<Cart>(`/carts/user/${id}`)
     .then((response) => response.data)

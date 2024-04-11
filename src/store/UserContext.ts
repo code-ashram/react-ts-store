@@ -1,7 +1,7 @@
 import { createContext, Dispatch } from 'react'
 
 import { Action } from './UserReducer.ts'
-import User from '../models/user.ts'
+import { User } from '../models'
 
 type ContextType = {
   user: User | null,

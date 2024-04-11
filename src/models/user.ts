@@ -1,4 +1,4 @@
-type User = {
+export type User = {
   address: {
     geolocation: {
       lat: string,
@@ -18,7 +18,4 @@ type User = {
     lastname: string
   },
   phone: string,
-  __v: number
 }
-
-export default User

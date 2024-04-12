@@ -8,13 +8,13 @@ import {
   TableHeader, TableRow
 } from '@nextui-org/react'
 import cn from 'classnames'
+import { FormattedMessage } from 'react-intl/lib'
 
 import userContext from '../store/UserContext.ts'
 
 import { transformToUppercase, userFullName } from '../utils.ts'
 
 import style from '../App.module.scss'
-import { FormattedMessage } from 'react-intl/lib'
 
 const UserProfile: FC = () => {
   const { user } = useContext(userContext)

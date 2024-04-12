@@ -19,7 +19,7 @@ import DeliveryAndPayment from './pages/DeliveryAndPayment/DeliveryAndPayment.ts
 import Contacts from './pages/Contacts.tsx'
 import Home from './pages/Home.tsx'
 import UserProfile from './pages/UserProfile.tsx'
-import UserCart from './pages/UserCart.tsx'
+import Checkout from './pages/Checkout.tsx'
 
 const queryClient = new QueryClient()
 
@@ -59,8 +59,8 @@ const router = createBrowserRouter([
         element: <UserProfile />
       },
       {
-        path: '/cart/:userId',
-        element: <UserCart />,
+        path: '/:userId/checkout',
+        element: <Checkout />,
         loader: loadCart
       },
     ]

@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Badge, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { jwtDecode } from 'jwt-decode'
 import { FormattedMessage } from 'react-intl/lib'
@@ -18,8 +18,7 @@ import AcmeLogo from './assets/images/AcmeLogo.tsx'
 import LoginForm from '../LoginForm/LoginForm.tsx'
 
 import styles from '../../App.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import CartMenu from '../../pages/CartMenu.tsx'
 
 type Props = {
   onSwitch: () => void
@@ -93,11 +92,8 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
 
           {user
             ? <div className={styles.navBar__userProfile}>
-              <Link to={`/cart/${user.id}`}>
-                <Badge content="5" size="md" color="primary">
-                  <FontAwesomeIcon icon={faCartShopping} size="2xl" />
-                </Badge>
-              </Link>
+              <CartMenu toCheckout={`${user.id}/checkout`} />
+
               <UserMenu />
             </div>
 

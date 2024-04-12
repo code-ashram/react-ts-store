@@ -14,6 +14,6 @@ export const loadProduct = async ({ params }: LoaderFunctionArgs): Promise<Recor
 }
 
 export const loadCart = async ({ params }: LoaderFunctionArgs): Promise<Record<'cart', Cart>> => {
-  const cart = await getUserCart(Number(params.userId))
+  const [cart] = await getUserCart(Number(params.userId))
   return { cart }
 }

@@ -9,6 +9,8 @@ import NavBar from '../components/NavBar'
 import CategoryList from '../components/CategoryList.tsx'
 
 import UserContext from '../store/UserContext.ts'
+import CartContext from '../store/CartContext.ts'
+import CartReducer from '../store/CartReducer.ts'
 import UserReducer from '../store/UserReducer.ts'
 
 import { browserLang, defineTheme, Theme, translations } from '../utils.ts'
@@ -18,7 +20,8 @@ import style from '../App.module.scss'
 const App = () => {
   const [theme, setTheme] = useState<Theme>(defineTheme)
   const lang = useMemo(() => browserLang, [])
-  const [user, dispatch] = useReducer(UserReducer, null)
+  const [user, dispatchUser] = useReducer(UserReducer, null)
+  const [cart, dispatchCart] = useReducer(CartReducer, null)
 
   useEffect(() => {
     document.body.className = `${theme} text-foreground bg-background`
@@ -40,21 +43,23 @@ const App = () => {
   return (
     <>
       <IntlProvider locale={lang} messages={translations[lang]}>
-        <UserContext.Provider value={{ user, dispatch }}>
-          <main className={cn(theme, 'text-foreground', 'bg-background')}>
-            <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
+        <UserContext.Provider value={{ user, dispatch: dispatchUser }}>
+          <CartContext.Provider value={{ cart, dispatch: dispatchCart }}>
+            <main className={cn(theme, 'text-foreground', 'bg-background')}>
+              <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
 
-            <Container>
-              <ul className={style.storeFilter}>
-                <CategoryList />
-                <Divider orientation="vertical" />
-              </ul>
+              <Container>
+                <ul className={style.storeFilter}>
+                  <CategoryList />
+                  <Divider orientation="vertical" />
+                </ul>
 
-              <section className={style.storeSection}>
-                <Outlet />
-              </section>
-            </Container>
-          </main>
+                <section className={style.storeSection}>
+                  <Outlet />
+                </section>
+              </Container>
+            </main>
+          </CartContext.Provider>
         </UserContext.Provider>
       </IntlProvider>
     </>

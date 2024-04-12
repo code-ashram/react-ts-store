@@ -5,6 +5,8 @@ import cn from 'classnames'
 import { Cart } from '../models'
 import CartProduct from '../components/CartProduct.tsx'
 
+import style from '../App.module.scss'
+
 
 const Checkout: FC = () => {
   const { cart } = useLoaderData() as Record<'cart', Cart>
@@ -13,7 +15,7 @@ const Checkout: FC = () => {
 
   return (
     <>
-      <h2 className={cn()}>Checkout</h2>
+      <h2 className={cn(style.infoTitle)}>Checkout</h2>
 
       <ul>
         {cart.products.map((product) =>

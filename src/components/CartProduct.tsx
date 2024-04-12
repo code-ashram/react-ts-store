@@ -8,7 +8,7 @@ type Props = {
 }
 
 const CartProduct: FC<Props> = ({ productId }) => {
-  const { data } = useQuery({ queryKey: ['product'], queryFn: () => getProduct(+productId) })
+  const { data } = useQuery({ queryKey: ['product', productId], queryFn: () => getProduct(+productId) })
 
   return (
     <li className="flex items-center">

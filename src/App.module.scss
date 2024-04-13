@@ -164,3 +164,39 @@
   justify-content: space-between;
   width: 100px;
 }
+
+:local(.cartProductInput) {
+  margin: 0 10px;
+  max-width: 70px;
+  min-width: 70px;
+}
+
+:local(.cartProductImg) {
+  margin-right: 30px;
+}
+
+:local(.cartProductName) {
+  max-width: 500px;
+}
+
+:local(.cartProductControl) {
+  width: 300px;
+}
+
+:local(.cartProductPrice) {
+  min-width: 120px;
+  font-size: 30px;
+  text-align: right;
+}
+
+:local(.checkoutList) {
+  margin-bottom: 30px;
+}
+
+:local(.checkoutList) li:not(:first-child) {
+  margin-top: 20px;
+}
+
+:local(.checkoutSum) {
+  margin-top: 20px;
+}

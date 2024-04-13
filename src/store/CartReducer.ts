@@ -1,7 +1,7 @@
 import { Cart } from '../models'
 
 export const enum ActionType {
-  SetCart = 'set-cart',
+  SetCart = 'set-cart'
 }
 
 export type SetCurrentCart = {
@@ -11,7 +11,7 @@ export type SetCurrentCart = {
 
 export type Action = SetCurrentCart
 
-const cartReducer = (state: Cart | null, action: Action): Cart | null => {
+const cartReducer = (state: Cart | null,  action: Action): Cart | null => {
   switch (action.type) {
     case ActionType.SetCart:
       return action.payload

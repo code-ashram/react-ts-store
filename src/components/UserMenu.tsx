@@ -17,7 +17,7 @@ const UserMenu: FC = () => {
       payload: null
     })
 
-    if (pathname === '/user-profile') navigate('/home')
+    if (pathname === '/user-profile' || pathname === '/checkout') navigate('/home')
   }
 
   return (

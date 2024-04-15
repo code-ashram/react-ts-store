@@ -172,7 +172,25 @@
 }
 
 :local(.cartProductImg) {
+  align-items: center;
+  justify-content: center;
+  display: flex;
   margin-right: 30px;
+  max-height: 100px;
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+:local(.cartProductImg) div {
+  border-radius: 0 !important;
+}
+
+:local(.cartProductImg) img {
+  border-radius: 0;
+  max-width: 70px;
+  //max-height: 100px;
 }
 
 :local(.cartProductName) {

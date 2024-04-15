@@ -21,8 +21,8 @@ const CartProduct: FC<Props> = ({ productId }) => {
       <Card>
         <CardBody className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center">
-            <div className={style.cartProductImg}>
-              <Image src={data?.image} alt={data?.title} width={100} />
+            <div className={cn(style.cartProductImg, 'rounded-md')}>
+              <Image className='rounded-none' src={data?.image} alt={data?.title} width={100} isZoomed />
             </div>
 
             <div className={style.cartProductName}>

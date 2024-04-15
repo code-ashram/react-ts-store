@@ -105,6 +105,7 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
           {user
             ? <div className={styles.navBar__userProfile}>
               <CartMenu toCheckout={`/checkout`} count={cart ? cart.products.length : 0}/>
+              {/* <CartMenu toCheckout={`/checkout`} count={5}/> */}
 
               <UserMenu />
             </div>

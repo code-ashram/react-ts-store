@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { ChangeEvent, FC, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
@@ -12,6 +12,11 @@ import style from '../App.module.scss'
 const Checkout: FC = () => {
   const { cart } = useContext(cartContext)
   const navigate = useNavigate()
+  const [count, setCount] = useState<string>('1')
+
+  const handleSetCount = (e: ChangeEvent<HTMLInputElement>) => {
+    setCount(e.target.value)
+  }
 
   useEffect(() => {
     if (!cart) navigate('/home')
@@ -23,7 +28,12 @@ const Checkout: FC = () => {
 
       <ul className={cn(style.checkoutList)}>
         {cart?.products.map((product) =>
-          <CartProduct key={product.productId} productId={product.productId} />
+          <CartProduct
+            key={product.productId}
+            productId={product.productId}
+            count={Number(count)}
+            onChange={handleSetCount}
+            onDelete={() => console.log('delete!')}/>
         )}
       </ul>
 

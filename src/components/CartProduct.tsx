@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ChangeEvent, FC } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Card, CardBody, Image, Input } from '@nextui-org/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,9 +11,12 @@ import style from '../App.module.scss'
 
 type Props = {
   productId: number
+  count: number
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onDelete: () => void
 }
 
-const CartProduct: FC<Props> = ({ productId }) => {
+const CartProduct: FC<Props> = ({ productId, count, onChange, onDelete}) => {
   const { data } = useQuery({ queryKey: ['product', productId], queryFn: () => getProduct(+productId) })
 
   return (
@@ -33,18 +36,21 @@ const CartProduct: FC<Props> = ({ productId }) => {
           </div>
 
           <div className={cn(style.cartProductControl, "flex flex-row items-center justify-between")}>
-            <p className={cn(style.cartProductPrice)}>${data?.price}</p>
+            <p className={cn(style.cartProductPrice)}>
+              ${(data?.price ? count * data?.price : count).toFixed(2)}
+            </p>
 
             <Input
               className={cn(style.cartProductInput)}
+              onChange={onChange}
               type="number"
-              placeholder="1"
+              value={String(count)}
               min={1}
               max={99}
               labelPlacement="outside"
             />
 
-            <FontAwesomeIcon icon={faTrash} size="2xl" style={{ color: '#B197FC' }} />
+            <FontAwesomeIcon className={style.checkoutTrash} icon={faTrash} size="2xl" style={{ color: '#B197FC' }} onClick={onDelete}/>
           </div>
         </CardBody>
       </Card>

@@ -190,7 +190,6 @@
 :local(.cartProductImg) img {
   border-radius: 0;
   max-width: 70px;
-  //max-height: 100px;
 }
 
 :local(.cartProductName) {
@@ -217,4 +216,8 @@
 
 :local(.checkoutSum) {
   margin-top: 20px;
+}
+
+:local(.checkoutTrash):hover {
+  cursor: pointer;
 }

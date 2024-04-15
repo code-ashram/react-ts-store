@@ -8,9 +8,11 @@ import cn from 'classnames'
 
 import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
 import UserMenu from '../UserMenu.tsx'
+import CartMenu from '../../pages/CartMenu.tsx'
 
 import { ActionType } from '../../store/UserReducer.ts'
 import { ActionType as CartAction } from '../../store/CartReducer.ts'
+import cartContext from '../../store/CartContext.ts'
 import UserContext from '../../store/UserContext.ts'
 import { User } from '../../models'
 import { getUser, getUserCart, postAuth } from '../../api'
@@ -19,8 +21,6 @@ import AcmeLogo from './assets/images/AcmeLogo.tsx'
 import LoginForm from '../LoginForm/LoginForm.tsx'
 
 import styles from '../../App.module.scss'
-import CartMenu from '../../pages/CartMenu.tsx'
-import cartContext from '../../store/CartContext.ts'
 
 type Props = {
   onSwitch: () => void
@@ -31,7 +31,7 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
   const [auth, setAuth] =
     useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
   const { user, dispatch: dispatchUser } = useContext(UserContext)
-  const { dispatch: dispatchCart } = useContext(cartContext)
+  const { cart, dispatch: dispatchCart } = useContext(cartContext)
   const [validation, setValidation] = useState<boolean>(false)
   const queryClient = useQueryClient()
 
@@ -104,7 +104,7 @@ const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
 
           {user
             ? <div className={styles.navBar__userProfile}>
-              <CartMenu toCheckout={`/checkout`} />
+              <CartMenu toCheckout={`/checkout`} count={cart ? cart.products.length : 0}/>
 
               <UserMenu />
             </div>

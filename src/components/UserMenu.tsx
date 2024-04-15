@@ -1,8 +1,8 @@
 import { FC, useContext } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User as UserUI } from '@nextui-org/react'
 import { FormattedMessage } from 'react-intl/lib'
 
-import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ActionType } from '../store/UserReducer.ts'
 import UserContext from '../store/UserContext.ts'
 

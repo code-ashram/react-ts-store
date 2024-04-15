@@ -6,14 +6,15 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   toCheckout: string
+  count: number | null
 }
 
-const CartMenu: FC<Props> = ({ toCheckout }) => {
+const CartMenu: FC<Props> = ({ toCheckout, count }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
     <Popover placement="bottom" showArrow={true} isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)}>
-      <Badge content="5" size="md" color="primary">
+      <Badge content={count} size="md" color="primary">
         <PopoverTrigger>
           <FontAwesomeIcon icon={faCartShopping} size="2xl" />
         </PopoverTrigger>

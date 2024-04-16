@@ -5,12 +5,12 @@ import { User } from '../models'
 
 type ContextType = {
   user: User | null,
-  dispatch: Dispatch<Action>
+  dispatchUser: Dispatch<Action>
 }
 
 const initialValue: ContextType = {
   user: null,
-  dispatch: () => {}
+  dispatchUser: () => {}
 }
 
 export const UserContext = createContext<ContextType>(initialValue)

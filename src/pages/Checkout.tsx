@@ -14,21 +14,23 @@ import style from '../App.module.scss'
 
 const Checkout: FC = () => {
   const navigate = useNavigate()
-  const { cart, dispatch } = useContext(cartContext)
+  const { cart, dispatchCart } = useContext(cartContext)
 
   const handleChangeCart = (id: number, count: number): void => {
-    const payload: Cart = {...cart, products: []}
-    console.log(payload)
+    if (!cart) return
 
-    dispatch({
+    const payload: Cart = {
+      ...cart, products: cart.products.map((product) =>
+        product.productId === id
+          ? { ...product, quantity: count }
+          : product)
+    }
+
+    dispatchCart({
       type: CartAction.SetCart,
       payload
     })
   }
-
-  // const handleSetCount = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setCount(e.target.value)
-  // }
 
   useEffect(() => {
     if (!cart) navigate('/home')

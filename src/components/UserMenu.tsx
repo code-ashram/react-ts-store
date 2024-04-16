@@ -5,15 +5,23 @@ import { FormattedMessage } from 'react-intl/lib'
 
 import { ActionType } from '../store/UserReducer.ts'
 import UserContext from '../store/UserContext.ts'
+import { ActionType as CartAction } from '../store/CartReducer.ts'
+import cartContext from '../store/CartContext.ts'
 
 const UserMenu: FC = () => {
-  const { dispatch } = useContext(UserContext)
+  const { dispatchUser } = useContext(UserContext)
+  const { dispatchCart } = useContext(cartContext)
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
   const handleLogout = () => {
-    dispatch({
+    dispatchUser({
       type: ActionType.SetUser,
+      payload: null
+    })
+
+    dispatchCart({
+      type: CartAction.SetCart,
       payload: null
     })
 

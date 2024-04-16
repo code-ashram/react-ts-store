@@ -4,12 +4,12 @@ export const enum ActionType {
   SetCart = 'set-cart'
 }
 
-export type SetCurrentCart = {
+export type UpdateCart = {
   type: ActionType
   payload: Cart | null
 }
 
-export type Action = SetCurrentCart
+export type Action = UpdateCart
 
 const cartReducer = (state: Cart | null,  action: Action): Cart | null => {
   switch (action.type) {

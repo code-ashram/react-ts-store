@@ -12,7 +12,7 @@ import style from '../App.module.scss'
 type Props = {
   productId: number
   count: number
-  onChange: (productId: number | undefined, count: number) => void
+  onChange: (productId: number, count: number) => void
 }
 
 const CartProduct: FC<Props> = ({ productId, count, onChange }) => {

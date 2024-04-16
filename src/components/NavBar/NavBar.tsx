@@ -30,8 +30,8 @@ type Props = {
 const NavBar: FC<Props> = ({ onSwitch, isActive }) => {
   const [auth, setAuth] =
     useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
-  const { user, dispatch: dispatchUser } = useContext(UserContext)
-  const { cart, dispatch: dispatchCart } = useContext(cartContext)
+  const { user, dispatchUser: dispatchUser } = useContext(UserContext)
+  const { cart, dispatchCart: dispatchCart } = useContext(cartContext)
   const [validation, setValidation] = useState<boolean>(false)
   const queryClient = useQueryClient()
 

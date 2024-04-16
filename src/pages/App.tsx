@@ -43,8 +43,8 @@ const App = () => {
   return (
     <>
       <IntlProvider locale={lang} messages={translations[lang]}>
-        <UserContext.Provider value={{ user, dispatch: dispatchUser }}>
-          <CartContext.Provider value={{ cart, dispatch: dispatchCart }}>
+        <UserContext.Provider value={{ user, dispatchUser: dispatchUser }}>
+          <CartContext.Provider value={{ cart, dispatchCart: dispatchCart }}>
             <main className={cn(theme, 'text-foreground', 'bg-background')}>
               <NavBar onSwitch={handleSwitchColorTheme} isActive={theme === Theme.Dark} />
 

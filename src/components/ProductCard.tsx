@@ -2,19 +2,23 @@ import { FC } from 'react'
 import { Card, CardHeader, CardBody, Image, CardFooter, Button, Divider } from '@nextui-org/react'
 import cn from 'classnames'
 
-import { Product } from '../models'
+import { Category, Product } from '../models'
 
 import style from '../App.module.scss'
 import { FormattedMessage } from 'react-intl/lib'
+import { Link, useParams } from 'react-router-dom'
 
 type Props = {
   product: Product
+  onAdd: (id: number) => void
 }
 
-const ProductCard: FC<Props> = ({ product }) => {
+const ProductCard: FC<Props> = ({ product, onAdd }) => {
+  const params = useParams()
 
   return (
     <Card className={cn(style.card, 'py-4')}>
+      <Link to={`/${params.category === Category.All ? product.category : params.category}/${product.id}`}>
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
         <Image
           alt="Card background"
@@ -28,9 +32,11 @@ const ProductCard: FC<Props> = ({ product }) => {
         <h3 className={cn(style.cardTitle, 'font-bold', 'text-base')}>{product.title}</h3>
         <h4 className={cn(style.cardRating)}>Rating: {product.rating.rate} / 5</h4>
       </CardBody>
+      </Link>
+
       <Divider />
       <CardFooter className="pb-0">
-        <Button color="primary">
+        <Button color="primary" onClick={() => onAdd(product.id)}>
           <FormattedMessage id={'product.button.add'} />
         </Button>
       </CardFooter>

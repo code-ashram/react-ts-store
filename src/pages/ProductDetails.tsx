@@ -1,15 +1,37 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { useLoaderData, Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl/lib'
 import { BreadcrumbItem, Breadcrumbs, Button, Divider, Link as NextUILink } from '@nextui-org/react'
 import cn from 'classnames'
 
-import { Product } from '../models'
+import cartContext from '../store/CartContext.ts'
+import { Cart, Product } from '../models'
+import { ActionType as CartAction } from '../store/CartReducer.ts'
 
 import style from '../App.module.scss'
 
 const ProductDetails: FC = () => {
   const { product } = useLoaderData() as Record<'product', Product>
+  const { cart, dispatchCart } = useContext(cartContext)
+
+  const handleAddToCart = () => {
+    if (!cart) return
+
+    const payload: Cart = {
+      ...cart, products: cart.products.some((cartProduct) => cartProduct.productId === product.id)
+        ? cart.products.map((cartProduct) =>
+          cartProduct.productId === product.id
+            ? {...cartProduct, quantity: cartProduct.quantity + 1}
+            : cartProduct )
+        : [...cart.products, { productId: product.id, quantity: 1 }]
+    }
+
+    dispatchCart({
+      type: CartAction.SetCart,
+      payload
+    })
+    console.log(product)
+  }
 
   return (
     <>
@@ -55,7 +77,7 @@ const ProductDetails: FC = () => {
         <div className={cn(style.productDetails)}>
           <p className={cn(style.productPrice)}>${product?.price}</p>
 
-          <Button color="primary">
+          <Button color="primary" onClick={handleAddToCart}>
             <FormattedMessage id={'product.button.add'} />
           </Button>
 

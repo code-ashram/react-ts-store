@@ -5,9 +5,9 @@ import cn from 'classnames'
 import CartProduct from '../components/CartProduct/CartProduct'
 
 import { Divider } from '@nextui-org/react'
-import cartContext from '../store/CartContext.ts'
+import cartContext from '../store/CartContext'
 
-import { ActionType as CartAction } from '../store/CartReducer.ts'
+import { ActionType as CartAction } from '../store/CartReducer'
 import { Cart } from '../models'
 
 import style from '../App.module.scss'

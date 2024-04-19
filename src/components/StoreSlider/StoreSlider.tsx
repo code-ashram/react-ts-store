@@ -1,9 +1,8 @@
 import { FC } from 'react'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { A11y, EffectFade, Navigation, Pagination, Scrollbar } from 'swiper/modules'
 
-import SliderImagesList from './assets/SliderImagesList.ts'
+import SliderImagesList from './assets/SliderImagesList'
 
 import 'swiper/css/bundle'
 

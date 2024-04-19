@@ -197,7 +197,7 @@
 }
 
 :local(.cartProductControl) {
-  width: 300px;
+  width: 275px;
 }
 
 :local(.cartProductPrice) {
@@ -218,6 +218,13 @@
   margin-top: 20px;
 }
 
-:local(.checkoutTrash):hover {
-  cursor: pointer;
+:local(.checkoutTrash) {
+  padding: 0 !important;
+  min-width: 45px !important;
+  max-width: 45px !important;
+}
+
+:local(.cartEmpty) {
+  min-width: 320px;
+  margin-bottom: 20px;
 }

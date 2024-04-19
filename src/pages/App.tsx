@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useReducer, useState } from 'react'
+import { Outlet } from 'react-router-dom'
 import { IntlProvider } from 'react-intl'
 import { Divider } from '@nextui-org/react'
-import { Outlet } from 'react-router-dom'
 import cn from 'classnames'
 
-import Container from '../components/UI/Container.tsx'
+import Container from '../components/UI/Container'
 import NavBar from '../components/NavBar'
-import CategoryList from '../components/CategoryList.tsx'
+import CategoryList from '../components/CategoryList/CategoryList'
 
 import UserContext from '../store/UserContext.ts'
 import CartContext from '../store/CartContext.ts'

@@ -1,12 +1,12 @@
 import { FC } from 'react'
+import { FormattedMessage } from 'react-intl/lib'
+import { Link, useParams } from 'react-router-dom'
 import { Card, CardHeader, CardBody, Image, CardFooter, Button, Divider } from '@nextui-org/react'
 import cn from 'classnames'
 
-import { Category, Product } from '../models'
+import { Category, Product } from '../../models'
 
-import style from '../App.module.scss'
-import { FormattedMessage } from 'react-intl/lib'
-import { Link, useParams } from 'react-router-dom'
+import style from '../../App.module.scss'
 
 type Props = {
   product: Product

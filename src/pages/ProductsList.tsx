@@ -1,12 +1,13 @@
 import { FC, useContext } from 'react'
 import { useLoaderData } from 'react-router-dom'
 
-import ProductCard from '../components/ProductCard.tsx'
+import ProductCard from '../components/ProductCard/ProductCard'
+import cartContext from '../store/CartContext.ts'
+import { ActionType as CartAction } from '../store/CartReducer.ts'
+
 import { Cart, Product } from '../models'
 
 import style from '../App.module.scss'
-import cartContext from '../store/CartContext.ts'
-import { ActionType as CartAction } from '../store/CartReducer.ts'
 
 const ProductsList: FC = () => {
   const { products } = useLoaderData() as Record<'products', Product[]>

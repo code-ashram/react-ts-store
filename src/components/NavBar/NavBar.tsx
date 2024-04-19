@@ -6,19 +6,19 @@ import { jwtDecode } from 'jwt-decode'
 import { FormattedMessage } from 'react-intl/lib'
 import cn from 'classnames'
 
-import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher.tsx'
-import UserMenu from '../UserMenu.tsx'
-import CartMenu from '../../pages/CartMenu.tsx'
+import ThemeSwitcher from './parts/ThemeSwitcher/ThemeSwitcher'
+import UserMenu from '../UserMenu/UserMenu'
+import CartMenu from '../../pages/CartMenu'
 
-import { ActionType } from '../../store/UserReducer.ts'
-import { ActionType as CartAction } from '../../store/CartReducer.ts'
-import cartContext from '../../store/CartContext.ts'
-import UserContext from '../../store/UserContext.ts'
+import { ActionType } from '../../store/UserReducer'
+import { ActionType as CartAction } from '../../store/CartReducer'
+import cartContext from '../../store/CartContext'
+import UserContext from '../../store/UserContext'
 import { User } from '../../models'
 import { getUser, getUserCart, postAuth } from '../../api'
 
-import AcmeLogo from './assets/images/AcmeLogo.tsx'
-import LoginForm from '../LoginForm/LoginForm.tsx'
+import AcmeLogo from './assets/images/AcmeLogo'
+import LoginForm from '../LoginForm/LoginForm'
 
 import styles from '../../App.module.scss'
 

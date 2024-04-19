@@ -3,10 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User as UserUI } from '@nextui-org/react'
 import { FormattedMessage } from 'react-intl/lib'
 
-import { ActionType } from '../store/UserReducer.ts'
-import UserContext from '../store/UserContext.ts'
-import { ActionType as CartAction } from '../store/CartReducer.ts'
-import cartContext from '../store/CartContext.ts'
+import { ActionType } from '../../store/UserReducer'
+import UserContext from '../../store/UserContext'
+import { ActionType as CartAction } from '../../store/CartReducer'
+import cartContext from '../../store/CartContext'
 
 const UserMenu: FC = () => {
   const { dispatchUser } = useContext(UserContext)

@@ -13,10 +13,10 @@ import {
 } from '@nextui-org/react'
 import cn from 'classnames'
 
-import User from '../../models/user.ts'
+import { User } from '../../models'
 
-import EyeSlashFilledIcon from './parts/EyeSlashFilledIcon.tsx'
-import EyeFilledIcon from './parts/EyeFilledIcon.tsx'
+import EyeSlashFilledIcon from './parts/EyeSlashFilledIcon'
+import EyeFilledIcon from './parts/EyeFilledIcon'
 
 import style from '../../App.module.scss'
 

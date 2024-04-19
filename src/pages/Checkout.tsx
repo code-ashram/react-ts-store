@@ -2,7 +2,7 @@ import { FC, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
-import CartProduct from '../components/CartProduct.tsx'
+import CartProduct from '../components/CartProduct/CartProduct'
 
 import { Divider } from '@nextui-org/react'
 import cartContext from '../store/CartContext.ts'
@@ -20,10 +20,12 @@ const Checkout: FC = () => {
     if (!cart) return
 
     const payload: Cart = {
-      ...cart, products: cart.products.map((product) =>
-        product.productId === id
-          ? { ...product, quantity: count }
-          : product)
+      ...cart, products: count
+        ? cart.products.map((product) =>
+          product.productId === id
+            ? { ...product, quantity: count }
+            : product)
+        : cart.products.filter((product) => product.productId !== id)
     }
 
     dispatchCart({
@@ -40,16 +42,23 @@ const Checkout: FC = () => {
     <>
       <h2 className={cn(style.infoTitle)}>Checkout</h2>
 
-      <ul className={cn(style.checkoutList)}>
-        {cart?.products.map((product) =>
-          <CartProduct
-            key={product.productId}
-            productId={product.productId}
-            count={Number(product.quantity)}
-            onChange={handleChangeCart}
-          />
-        )}
-      </ul>
+      {
+        cart?.products.length
+          ? <ul className={cn(style.checkoutList)}>
+            {cart?.products.map((product) =>
+              <CartProduct
+                key={product.productId}
+                productId={product.productId}
+                count={Number(product.quantity)}
+                onChange={handleChangeCart}
+              />
+            )}
+          </ul>
+
+          : <div className={cn(style.cartEmpty)}>
+            <p className="text-xl">Your cart is empty</p>
+          </div>
+      }
 
       <Divider />
       <h2 className={cn(style.infoTitle, style.checkoutSum)}>Total: $1488</h2>

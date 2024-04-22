@@ -12,14 +12,16 @@ import style from '../../App.module.scss'
 type Props = {
   productId: number
   count: number
+  onTotal: (productId: number, price: number) => void
   onChange: (productId: number, count: number) => void
 }
 
-const CartProduct: FC<Props> = ({ productId, count, onChange }) => {
+const CartProduct: FC<Props> = ({ productId, count, onChange, onTotal }) => {
   const { data } = useQuery({ queryKey: ['product', productId], queryFn: () => getProduct(+productId) })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(productId, Number(e.target.value))
+    onTotal(productId, data?.price ? data?.price : 0)
   }
 
   const handleDelete = () => {
@@ -44,7 +46,8 @@ const CartProduct: FC<Props> = ({ productId, count, onChange }) => {
 
           <div className={cn(style.cartProductControl, 'flex flex-row items-center justify-between')}>
             <p className={cn(style.cartProductPrice)}>
-              ${(data?.price ? count * data?.price : count).toFixed(2)}
+              ${(data?.price ? count * data?.price : 0).toFixed(2)}
+              {/* ${String(price)} */}
             </p>
 
             <Input

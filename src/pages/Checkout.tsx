@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
@@ -12,9 +12,31 @@ import { Cart } from '../models'
 
 import style from '../App.module.scss'
 
+type Price = {
+  productId: number
+  price: number
+}
+
 const Checkout: FC = () => {
   const navigate = useNavigate()
   const { cart, dispatchCart } = useContext(cartContext)
+  const [productPrices, setProductPrices] = useState<Price[]>([])
+
+  useEffect(() => {
+    if (!cart) navigate('/home')
+  }, [cart, navigate])
+
+  // const initialPrices = cart?.products.map((product) => ({productId: product.productId, price: product.quantity}))
+
+  const handleAddPrice = (id: number, price: number): void => {
+    setProductPrices(prevPrices => [...prevPrices, { productId: id, price }])
+    // setProductPrices(prevPrices => prevPrices.map((item) =>
+    //   item.productId === id
+    //     ? { productId: id, price }
+    //     : item
+    // ))
+    console.log(productPrices)
+  }
 
   const handleChangeCart = (id: number, count: number): void => {
     if (!cart) return
@@ -34,10 +56,6 @@ const Checkout: FC = () => {
     })
   }
 
-  useEffect(() => {
-    if (!cart) navigate('/home')
-  }, [cart, navigate])
-
   return (
     <>
       <h2 className={cn(style.infoTitle)}>Checkout</h2>
@@ -50,6 +68,7 @@ const Checkout: FC = () => {
                 key={product.productId}
                 productId={product.productId}
                 count={Number(product.quantity)}
+                onTotal={handleAddPrice}
                 onChange={handleChangeCart}
               />
             )}

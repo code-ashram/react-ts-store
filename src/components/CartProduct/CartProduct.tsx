@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react'
+import { ChangeEvent, FC, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Button, Card, CardBody, Image, Input } from '@nextui-org/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,9 +19,12 @@ type Props = {
 const CartProduct: FC<Props> = ({ productId, count, onChange, onTotal }) => {
   const { data } = useQuery({ queryKey: ['product', productId], queryFn: () => getProduct(+productId) })
 
+  useEffect(() => {
+    if (data) onTotal(productId, data.price)
+  }, [data, onTotal, productId])
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(productId, Number(e.target.value))
-    onTotal(productId, data?.price ? data?.price : 0)
   }
 
   const handleDelete = () => {
@@ -46,8 +49,7 @@ const CartProduct: FC<Props> = ({ productId, count, onChange, onTotal }) => {
 
           <div className={cn(style.cartProductControl, 'flex flex-row items-center justify-between')}>
             <p className={cn(style.cartProductPrice)}>
-              ${(data?.price ? count * data?.price : 0).toFixed(2)}
-              {/* ${String(price)} */}
+              ${(data?.price ? count * data?.price : 0)}
             </p>
 
             <Input

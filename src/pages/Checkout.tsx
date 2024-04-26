@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
@@ -24,19 +24,25 @@ const Checkout: FC = () => {
 
   useEffect(() => {
     if (!cart) navigate('/home')
-  }, [cart, navigate])
-
-  // const initialPrices = cart?.products.map((product) => ({productId: product.productId, price: product.quantity}))
-
-  const handleAddPrice = (id: number, price: number): void => {
-    setProductPrices(prevPrices => [...prevPrices, { productId: id, price }])
-    // setProductPrices(prevPrices => prevPrices.map((item) =>
-    //   item.productId === id
-    //     ? { productId: id, price }
-    //     : item
-    // ))
     console.log(productPrices)
-  }
+  }, [cart, navigate, productPrices])
+
+  const total = useMemo(() =>
+    cart?.products.reduce((acc, product) =>
+      acc + product.quantity * (productPrices.find(({ productId }) =>
+        productId === product.productId)?.price ?? 0), 0), [cart?.products, productPrices])
+
+  const handleAddPrice = useCallback((id: number, price: number): void => {
+    setProductPrices((prevPrices) =>
+      prevPrices.some((item) => item.productId === id)
+        ? prevPrices.map((item) =>
+          item.productId === id
+            ? { ...item, price }
+            : item
+        )
+        : [...prevPrices, { productId: id, price }]
+    )
+  }, [])
 
   const handleChangeCart = (id: number, count: number): void => {
     if (!cart) return
@@ -80,7 +86,7 @@ const Checkout: FC = () => {
       }
 
       <Divider />
-      <h2 className={cn(style.infoTitle, style.checkoutSum)}>Total: $1488</h2>
+      <h2 className={cn(style.infoTitle, style.checkoutSum)}>Total: ${total?.toFixed(2)}</h2>
     </>
   )
 }

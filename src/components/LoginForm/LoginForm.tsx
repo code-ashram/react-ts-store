@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, FormEvent, useContext, useState } from 'react'
 import { FormattedMessage } from 'react-intl/lib'
 import { useIntl } from 'react-intl'
 import {
@@ -19,67 +19,110 @@ import EyeSlashFilledIcon from './parts/EyeSlashFilledIcon'
 import EyeFilledIcon from './parts/EyeFilledIcon'
 
 import style from '../../App.module.scss'
+import UserContext from '../../store/UserContext.ts'
+import cartContext from '../../store/CartContext.ts'
+import { useQueryClient } from '@tanstack/react-query'
+import { getUser, getUserCart, postAuth } from '../../api'
+import { jwtDecode } from 'jwt-decode'
+import { ActionType } from '../../store/UserReducer.ts'
+import { ActionType as CartAction } from '../../store/CartReducer.ts'
 
 type Props = {
-  auth: Pick<User, 'username' | 'password'>
-  onChange: (payload: Partial<User>) => void
-  onSubmit: (e: Pick<User, "username" | "password">) => Promise<void>
-  isInvalid: boolean
-  onFocus: () => void
+  btnText: string,
 }
 
-const LoginForm: FC<Props> = ({auth, onChange, onSubmit, onFocus, isInvalid}) => {
+const LoginForm: FC<Props> = ({btnText}) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
+  const [auth, setAuth] =
+    useState<Pick<User, 'username' | 'password'>>({ username: '', password: '' })
+  const { dispatchUser: dispatchUser } = useContext(UserContext)
+  const { dispatchCart: dispatchCart } = useContext(cartContext)
+  const [validation, setValidation] = useState<boolean>(false)
   const { formatMessage } = useIntl()
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const queryClient = useQueryClient()
+  const { onOpen, onOpenChange } = useDisclosure()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const handleChangeAuth = (payload: Partial<User>) => {
+    setAuth(prevUserData => ({ ...prevUserData, ...payload }))
+  }
+
+  const handleSubmitAuth = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    try {
+      const { token } = await queryClient.fetchQuery({
+        queryKey: ['auth'],
+        queryFn: () => postAuth(auth.username, auth.password)
+      })
+
+      const { sub } = jwtDecode<Record<'sub', number>>(token)
+
+      const user = await queryClient.fetchQuery({ queryKey: ['user', `${sub}`], queryFn: () => getUser(sub) })
+
+      dispatchUser({
+        type: ActionType.SetUser,
+        payload: user
+      })
+
+      const [userCart] = await queryClient.fetchQuery({ queryKey: ['cart'], queryFn: () => getUserCart(sub) })
+
+      dispatchCart({
+        type: CartAction.SetCart,
+        payload: userCart
+      })
+
+    } catch (error) {
+      console.error(error)
+      setValidation(true)
+    }
+  }
 
   const handleToggleVisibility = () => setIsVisible(!isVisible)
 
   return (
     <>
-      <Button onPress={onOpen} color="primary" variant="solid">
-        <FormattedMessage id={'navBar.link.signIn'} />
+      <Button onPress={onOpen} onClick={() => setIsOpen(true)} color="primary" variant="solid">
+        {btnText}
       </Button>
+
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 
         <ModalContent>
           {(onClose) => (
             <>
-              <form onSubmit={(e) => {
-                e.preventDefault()
-                onSubmit(auth).then(r => r)
-              }}>
+              <form onSubmit={handleSubmitAuth}>
 
                 <ModalHeader className="flex flex-col gap-1">
                   <FormattedMessage id={'form.title'} />
                 </ModalHeader>
 
-                <ModalBody className='gap-1'>
+                <ModalBody className="gap-1">
                   <div className={cn(style.errorWrapper)}>
                     <Input
                       className="max-w-xs"
                       type="text"
                       value={auth.username}
-                      onChange={(e) => onChange({ username: e.target.value })}
+                      onChange={(e) => handleChangeAuth({ username: e.target.value })}
                       isRequired
                       placeholder={formatMessage({ id: 'form.login.placeholder' })}
                       label={formatMessage({ id: 'form.login.label' })}
                       variant="bordered"
-                      isInvalid={isInvalid}
-                      onFocus={onFocus}
-                      errorMessage={isInvalid ? formatMessage({ id: 'form.validation.error' }) : null}
+                      isInvalid={validation}
+                      onFocus={() => setValidation(false)}
+                      errorMessage={validation ? formatMessage({ id: 'form.validation.error' }) : null}
                     />
                   </div>
 
                   <Input
                     value={auth.password}
-                    onChange={(e) => onChange({ password: e.target.value })}
+                    onChange={(e) => handleChangeAuth({ password: e.target.value })}
                     isRequired
                     label={formatMessage({ id: 'form.password.label' })}
                     placeholder={formatMessage({ id: 'form.password.placeholder' })}
                     variant="bordered"
-                    isInvalid={isInvalid}
-                    onFocus={onFocus}
+                    isInvalid={validation}
+                    onFocus={() => setValidation(false)}
                     endContent={
                       <button className="focus:outline-none" type="button" onClick={handleToggleVisibility}>
                         {isVisible ? (

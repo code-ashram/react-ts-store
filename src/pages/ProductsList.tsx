@@ -11,7 +11,6 @@ import style from '../App.module.scss'
 
 const ProductsList: FC = () => {
   const { products } = useLoaderData() as Record<'products', Product[]>
-
   const { cart, dispatchCart } = useContext(cartContext)
 
   const handleAddToCart = (id: number) => {

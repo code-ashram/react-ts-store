@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useReducer, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { IntlProvider } from 'react-intl'
 import { Divider } from '@nextui-org/react'
 import cn from 'classnames'
@@ -22,10 +22,12 @@ const App = () => {
   const lang = useMemo(() => browserLang, [])
   const [user, dispatchUser] = useReducer(UserReducer, null)
   const [cart, dispatchCart] = useReducer(CartReducer, null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     document.body.className = `${theme} text-foreground bg-background`
-  }, [theme])
+    if (!user) navigate('/home')
+  }, [navigate, theme, user])
 
   const handleSwitchColorTheme = () => {
     setTheme((prevTheme) => {

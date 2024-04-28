@@ -24,7 +24,6 @@ const Checkout: FC = () => {
 
   useEffect(() => {
     if (!cart) navigate('/home')
-    console.log(productPrices)
   }, [cart, navigate, productPrices])
 
   const total = useMemo(() =>
